@@ -74,7 +74,8 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        echo $id;
+        $usuario = User::find($id);
+        return view('admin.usuarios.show', compact('usuario'));
     }
 
     /**
@@ -85,7 +86,9 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::find($id);
+        $roles = Role::all();
+        return view('admin.usuarios.edit', compact('usuario', 'roles'));
     }
 
     /**
@@ -97,7 +100,33 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //$datos = $request->all();
+        //return response()->json($datos);
+
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|unique:users,email,'.$id,
+        ]);
+
+        $usuario = User::find($id);
+
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        if($request->filled('password')){
+            $usuario->password = Hash::make($request->password);
+        }
+        $usuario->empresa_id = Auth::user()->empresa_id;
+
+        $usuario->save();
+
+        $usuario->syncRoles($request->role);
+
+        return redirect()->route('admin.usuarios.index')
+        ->with('mensaje', 'Se modifico al usuario de manera correcta')
+        ->with('icono','success');
+      
+        
+
     }
 
     /**
@@ -108,6 +137,9 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect()->route('admin.usuarios.index')
+            ->with('mensaje', 'Se elimino el usuario de manera correcta')
+            ->with('icono', 'success');
     }
 }
