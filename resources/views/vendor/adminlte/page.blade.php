@@ -6,6 +6,24 @@
 @section('adminlte_css')
 @stack('css')
 @yield('css')
+<style>
+    .zoomP{
+        /* Se aumenta anchura y altura durante 2 segundos */
+        transition: width 1.1s, height 1.1s, transform 1.1s;
+        -moz-transition: width 1.1s, height 1.1s, -moz-transform 1.1s;
+        -webkit-transition: width 1.1s, height 1.1s, -webkit-transform 1.1s;
+        -o-transition: width 1.1s, height 1.1s, -o-transform 1.1s;
+        border: 1px solid #c0c0c0;
+        box-shadow: #c0c0c0 0px 5px 5px 0px;
+    }
+
+    .zoomP:hover{
+        /* Se transforma el elemento al pasar el mouse por encima al doble de su tamaño con scale(2) */
+        transform: scale(1.05);
+        -webkit-transform: scale(1.05); 
+        transform: scale(1.05);
+    }
+</style> 
 @stop
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
