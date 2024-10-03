@@ -367,6 +367,17 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Productos',
+            'icon' => 'fas fa-fw fa-list',
+            'submenu' => [
+                [
+                    'text' => 'Listado de Productos',
+                    'url' => 'admin/productos',
+                    'classes' => 'bg-white text-black'
+                ],
+            ],
+        ],
         
         /*['header' => 'labels'],
         [
