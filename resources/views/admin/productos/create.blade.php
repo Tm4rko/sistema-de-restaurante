@@ -23,8 +23,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="categoria">Categoria</label>
-                                        <select name="categoria" id="" class="form-control">
+                                        <label for="categoria_id">Categoria</label>
+                                        <select name="categoria_id" id="" class="form-control">
                                             @foreach ($categorias as $categoria)
                                             <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                             @endforeach
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="descripcion">Nombre del Producto</label>
+                                        <label for="nombre">Nombre del Producto</label>
                                         <input type="text" class="form-control" value="{{old('nombre')}}" name="nombre" required>
                                         @error('nombre')
                                         <small style="color:red">{{$message}}</small>
@@ -63,7 +63,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="descripcion">Descripcion</label>
-                                        <textarea name="" id="" class="form-control" rows="2"></textarea>
+                                        <textarea name="descripcion" id="" class="form-control" rows="2"></textarea>
                                         @error('descripcion')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
