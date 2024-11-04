@@ -118,9 +118,18 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        Categoria::destroy($id);
-        return redirect()->route('admin.categorias.index')
-            ->with('mensaje', 'Se elimino la categoria de manera correcta')
-            ->with('icono', 'success');
+        try {
+            // Intentar eliminar la categoría
+            Categoria::destroy($id);
+            
+            return redirect()->route('admin.categorias.index')
+                ->with('mensaje', 'Se eliminó la categoría de manera correcta')
+                ->with('icono', 'success');
+        } catch (\Exception $e) {
+            // Si ocurre un error al eliminar (por restricciones de clave externa), capturar la excepción
+            return redirect()->route('admin.categorias.index')
+                ->with('mensaje', 'No se puede eliminar la categoría porque tiene registros asociados.')
+                ->with('icono', 'error');
+        }
     }
 }

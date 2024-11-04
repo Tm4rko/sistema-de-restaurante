@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+
 
 class LoginController extends Controller
 {
@@ -20,12 +23,26 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    // Redirigir a la vista de login después de logout
+    protected function loggedOut(Request $request)
+    {
+        return redirect('/login');
+    }
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = '/home';
+
+    public function redirectPath()
+    {
+        if(auth()->user()->hasRole("Cliente")){
+            return "/index";
+        }
+        return "/home";
+    }
 
     /**
      * Create a new controller instance.

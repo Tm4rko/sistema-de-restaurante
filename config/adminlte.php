@@ -327,12 +327,28 @@ return [
             'text' => 'profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
-        ],*/
+        ],
         [
             'text' => 'Configuracion',
             'url' => 'admin/configuracion',
             'icon' => 'fas fa-fw fa-gear',
             'classes' => 'bg-blue text white',
+        ],*/
+        [
+            'text' => 'Sucursal',
+            'icon' => 'fas fa-fw fa-building',
+            'submenu' => [
+                [
+                    'text' => 'Configuracion',
+                    'url' => 'admin/configuracion',
+                    'classes' => 'bg-white text-black',
+                ],
+                [
+                    'text' => 'Crear sucursal',
+                    'url' => '/crear-sucursal',
+                    'classes' => 'bg-white text-black',
+                ],
+            ],
         ],
         [
             'text' => 'Roles',
@@ -378,7 +394,7 @@ return [
                 ],
             ],
         ],
-        
+
         /*['header' => 'labels'],
         [
             'text' => 'important',

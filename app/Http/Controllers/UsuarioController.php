@@ -17,8 +17,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $empresa_id = Auth::user()->empresa_id;
-        $usuarios = User::where('empresa_id',$empresa_id)->get();
+        $sucursal_id = Auth::user()->sucursal_id;
+        $usuarios = User::where('sucursal_id',$sucursal_id)->get();
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
@@ -55,7 +55,7 @@ class UsuarioController extends Controller
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request->password);
-        $usuario->empresa_id = Auth::user()->empresa_id;
+        $usuario->sucursal_id = Auth::user()->sucursal_id;
 
         $usuario->save();
 
@@ -116,7 +116,7 @@ class UsuarioController extends Controller
         if($request->filled('password')){
             $usuario->password = Hash::make($request->password);
         }
-        $usuario->empresa_id = Auth::user()->empresa_id;
+        $usuario->sucursal_id = Auth::user()->sucursal_id;
 
         $usuario->save();
 

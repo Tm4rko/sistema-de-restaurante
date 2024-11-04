@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'sucursal_id',
     ];
 
     /**
@@ -43,7 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function empresa(){
-        return $this->belongsTo(Empresa::class);
+    public function sucursal(){
+        return $this->belongsTo(Sucursal::class);
     }
 }

@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Bienvenido {{$empresa->nombre_empresa}}</h1>
+<h1>Bienvenido a la Sucursal {{$sucursal->nombre_sucursal}}</h1>
 <hr>
 @stop
 

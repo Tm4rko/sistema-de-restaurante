@@ -43,7 +43,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="precio_venta">Precio de Venta</label>
-                                        <input type="number" class="form-control" value="{{$producto->precio_venta}}" name="precio_venta" required>
+                                        <input type="number" class="form-control" value="{{$producto->precio_venta}}" name="precio_venta" min="1" step="0.01" required>
                                         @error('precio_venta')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror

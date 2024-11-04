@@ -44,7 +44,7 @@ class ProductoController extends Controller
 
         $request->validate([
             'nombre'=>'required',
-            'precio_venta'=>'required',
+            'precio_venta'=>'required|numeric|min:1',
             'fecha_ingreso'=>'required',
         ]);
 
@@ -108,7 +108,7 @@ class ProductoController extends Controller
 
         $request->validate([
             'nombre'=>'required',
-            'precio_venta'=>'required',
+            'precio_venta'=>'required|numeric|min:1',
             'fecha_ingreso'=>'required',
         ]);
 
