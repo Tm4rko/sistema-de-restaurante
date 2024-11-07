@@ -47,7 +47,7 @@ class UsuarioController extends Controller
         $request->validate([
             'name'=>'required',
             'email'=>'required|unique:users',
-            'password'=>'required|confirmed',
+            'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/','confirmed'],
         ]);
 
         $usuario = new User();
@@ -106,7 +106,7 @@ class UsuarioController extends Controller
         $request->validate([
             'name'=>'required',
             'email'=>'required|unique:users,email,'.$id,
-            'password'=>'confirmed',
+            'password'=>['string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/','confirmed'],
         ]);
 
         $usuario = User::find($id);

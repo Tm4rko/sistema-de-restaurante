@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 //Rutas para las vistas del cliente
-Route::get('/index', [\App\Http\Controllers\FrontController::class, 'index'])->name('index');
+Route::get('/', [\App\Http\Controllers\FrontController::class, 'index'])->name('index');
 Route::get('/listaProductos', [\App\Http\Controllers\FrontController::class, 'listaProductos'])->name('listaProductos');
 
 Auth::routes();
@@ -39,8 +39,8 @@ Route::get('/crear-empresa/estado/{id_estado}', [App\Http\Controllers\EmpresaCon
 Route::post('/crear-empresa/create', [App\Http\Controllers\EmpresaController::class, 'store'])->name('admin.empresas.store');
 
 //Rutas para las sucursales
-Route::get('/crear-sucursal', [App\Http\Controllers\SucursalController::class, 'create'])->name('admin.sucursals.create');
-Route::post('/crear-sucursal/create', [App\Http\Controllers\SucursalController::class, 'store'])->name('admin.sucursals.store');
+/*Route::get('/crear-sucursal', [App\Http\Controllers\SucursalController::class, 'create'])->name('admin.sucursals.create');
+Route::post('/crear-sucursal/create', [App\Http\Controllers\SucursalController::class, 'store'])->name('admin.sucursals.store');*/
 
 //Rutas para configuraciones
 Route::get('/admin/configuracion', [App\Http\Controllers\SucursalController::class, 'edit'])->name('admin.configuracion.edit')->middleware('auth');
@@ -104,6 +104,10 @@ Route::group(['middleware' => ['auth', 'role:Administrador']], function () {
     Route::get('/admin/productos/{id}/edit', [App\Http\Controllers\ProductoController::class, 'edit'])->name('admin.productos.edit');
     Route::put('/admin/productos/{id}', [App\Http\Controllers\ProductoController::class, 'update'])->name('admin.productos.update');
     Route::delete('/admin/productos/{id}', [App\Http\Controllers\ProductoController::class, 'destroy'])->name('admin.productos.destroy');
+
+    //Rutas para las sucursales
+    Route::get('/crear-sucursal', [App\Http\Controllers\SucursalController::class, 'create'])->name('admin.sucursals.create');
+    Route::post('/crear-sucursal/create', [App\Http\Controllers\SucursalController::class, 'store'])->name('admin.sucursals.store');
 });
 
 /*Route::group(['middleware' => ['auth', 'role:Cliente']], function () {

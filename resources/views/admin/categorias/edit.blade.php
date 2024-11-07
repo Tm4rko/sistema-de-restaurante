@@ -2,7 +2,7 @@
 
 
 @section('content_header')
-<h1>Categorias/Modificar Categoria</h1>
+<h1>Categorias Menú/Modificar Categoria</h1>
 <hr>
 @stop
 

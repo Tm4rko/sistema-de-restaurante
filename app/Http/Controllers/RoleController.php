@@ -92,7 +92,7 @@ class RoleController extends Controller
         //$datos = $request->all();
         //return response()->json($datos);
         $request->validate([
-            'name' => 'required|unique:roles,name,'.$id,
+            'name' => 'required|unique:roles,name,' . $id,
 
         ]);
 
@@ -116,9 +116,18 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        Role::destroy($id);
+        /*Role::destroy($id);
         return redirect()->route('admin.roles.index')
             ->with('mensaje', 'Se elimino el rol de manera correcta')
-            ->with('icono', 'success');
-    }
+            ->with('icono', 'success');*/
+
+        $role = Role::findOrFail($id);
+        // Verificar si el rol está asignado a algún usuario
+        if ($role->users()->exists()) {
+            return redirect()->route('admin.roles.index')->with('mensaje', 'No puedes eliminar este rol porque hay usuarios asignados a él.')->with('icono', 'error');
+        }
+        // Si no está asignado a ningún usuario, proceder a eliminarlo 
+        $role->delete();
+        return redirect()->route('admin.roles.index')->with('mensaje', 'Se eliminó el rol de manera correcta')->with('icono', 'success');
+    }   
 }

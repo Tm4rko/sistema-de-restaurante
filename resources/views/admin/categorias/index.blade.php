@@ -2,7 +2,7 @@
 
 
 @section('content_header')
-<h1>Categorias/Listado de Categorias</h1>
+<h1>Categorias Menú/Listado de Categorias</h1>
 <hr>
 @stop
 
@@ -11,7 +11,7 @@
     <div class="col-md-6">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Categorias Registradas</h3>
+                <h3 class="card-title">Categorias del Menú Registradas</h3>
                 <div class="card-tools">
                     <a href="{{url('/admin/categorias/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Crear nuevo</a>
                 </div>

@@ -45,14 +45,14 @@ class ProductoController extends Controller
         $request->validate([
             'nombre'=>'required',
             'precio_venta'=>'required|numeric|min:1',
-            'fecha_ingreso'=>'required',
+
         ]);
 
         $producto = new Producto();
 
         $producto->nombre = $request->nombre;
         $producto->precio_venta = $request->precio_venta;
-        $producto->fecha_ingreso = $request->fecha_ingreso;
+        $producto->fecha_ingreso = (new \DateTime())->format('Y-m-d');
         $producto->descripcion = $request->descripcion;
         $producto->categoria_id = $request->categoria_id;
 
@@ -109,14 +109,13 @@ class ProductoController extends Controller
         $request->validate([
             'nombre'=>'required',
             'precio_venta'=>'required|numeric|min:1',
-            'fecha_ingreso'=>'required',
         ]);
 
         $producto = Producto::find($id);
 
         $producto->nombre = $request->nombre;
         $producto->precio_venta = $request->precio_venta;
-        $producto->fecha_ingreso = $request->fecha_ingreso;
+        $producto->fecha_ingreso = (new \DateTime())->format('Y-m-d');
         $producto->descripcion = $request->descripcion;
         $producto->categoria_id = $request->categoria_id;
 

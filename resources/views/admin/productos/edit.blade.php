@@ -51,16 +51,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="fecha_ingreso">Fecha de Ingreso</label>
-                                        <input type="date" class="form-control" value="{{$producto->fecha_ingreso}}" name="fecha_ingreso" required>
-                                        @error('fecha_ingreso')
-                                        <small style="color:red">{{$message}}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
+                                <div class="col-md-9">
                                     <div class="form-group">
                                         <label for="descripcion">Descripcion</label>
                                         <textarea name="descripcion" id="" class="form-control" rows="2">{{$producto->descripcion}}</textarea>
@@ -101,18 +92,13 @@
                                                 };
                                             })(f);
                                             reader.readAsDataURL(f);
-
                                         }
-
                                     }
                                     document.getElementById('file').addEventListener('change', archivo, false);
                                 </script>
                             </div>
                         </div>
                     </div>
-
-
-
                     <hr>
                     <div class="row">
                         <div class="col-md-12">

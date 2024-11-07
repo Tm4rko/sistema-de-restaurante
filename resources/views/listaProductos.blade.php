@@ -50,7 +50,8 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10"> <br><br>
+        <div class="col-md-10">
+            <br><br>
             <h1 class="text-center">Realiza tu Pedido en Línea</h1>
             <div class="row"> @foreach ($categorias as $categoria) <div class="col-sm-12">
                     <h2 class="text-center mt-5">{{$categoria->nombre}}</h2>
@@ -165,6 +166,67 @@
                 @endforeach
             </div>
         </div>
+
+
+        <div class="col-md-10">
+            <br><br>
+
+            <div class="row"> @foreach ($categoriasNoCarnes as $categoria) <div class="col-sm-12">
+                    <h2 class="text-center mt-5">{{$categoria->nombre}}</h2>
+                    <div class="row justify-content-center"> @forelse ($categoria->productos as $producto)
+                        <div class="col-sm-6 mt-3 mb-3">
+                            <div class="clickable-element" data-bs-toggle="modal" data-bs-target="#productoModal-{{ $producto->id }}">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="{{asset('storage/'.$producto->imagen)}}" class="img-fluid" alt="{{$producto->nombre}}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 class="text-center">{{ $producto->nombre }}</h4>
+                                        <p class="text-center">Bs. {{ $producto->precio_venta }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="productoModal-{{ $producto->id }}" tabindex="-1" aria-labelledby="productoModalLabel-{{ $producto->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="productoModalLabel-{{ $producto->id }}">{{ $producto->nombre }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="info">
+                                            <img src="{{asset('storage/'.$producto->imagen)}}" class="img-fluid" alt="{{$producto->nombre}}">
+                                            <div class="details">
+                                                <p>Precio: Bs. {{ $producto->precio_venta }} / Unidad</p>
+                                                <p>Descripción: {{ $producto->descripcion }}</p>
+                                                <h5 style="font-weight: bold;">Elige la cantidad</h5>
+                                                <div class="counter">
+                                                    <button class="btn btn-secondary btn-counter" onclick="decreaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">-</button>
+                                                    <span id="count-{{ $producto->id }}">1</span>
+                                                    <button class="btn btn-secondary btn-counter" onclick="increaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">+</button>
+                                                </div>
+                                                <br>
+                                                <div id="total-price-{{ $producto->id }}" class="text-end fs-4">Total: Bs {{ $producto->precio_venta }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btn btn-primary">Añadir al Pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @empty
+                        <p>No hay productos disponibles en esta categoría.</p>
+                        @endforelse
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
 
@@ -199,7 +261,7 @@
         let currentCount = parseInt(count.textContent);
         count.textContent = currentCount + 1;
         updateTotalPrice(id, price);
-        updateMaxCount(id, price); // Asegúrate de actualizar el maxCount también
+        updateMaxCount(id, price);
     }
 
     function decreaseCount(id, price) {
@@ -208,7 +270,7 @@
         if (currentCount > 1) {
             count.textContent = currentCount - 1;
             updateTotalPrice(id, price);
-            updateMaxCount(id, price); // Asegúrate de actualizar el maxCount también
+            updateMaxCount(id, price);
         }
     }
 
@@ -247,6 +309,7 @@
             count.textContent = parseInt(count.textContent) + 1;
         }
     }
+
     function decreaseTerm(id, type) {
         let count = document.getElementById(`count-${type}-${id}`);
         let currentCount = parseInt(count.textContent);
@@ -254,6 +317,7 @@
             count.textContent = currentCount - 1;
         }
     }
+
     function updateTotalPrice(id, price) {
         let count = parseInt(document.getElementById(`count-${id}`).textContent);
         let totalPrice = (count * price).toFixed(2);

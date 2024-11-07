@@ -373,11 +373,11 @@ return [
             ],
         ],
         [
-            'text' => 'Categorias',
+            'text' => 'Categorias Menú',
             'icon' => 'fas fa-fw fa-tags',
             'submenu' => [
                 [
-                    'text' => 'Listado de Categorias',
+                    'text' => 'Listado de Categorias Menú',
                     'url' => 'admin/categorias',
                     'classes' => 'bg-white text-black'
                 ],
@@ -390,6 +390,17 @@ return [
                 [
                     'text' => 'Listado de Productos',
                     'url' => 'admin/productos',
+                    'classes' => 'bg-white text-black'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Pedidos',
+            'icon' => 'fas fa-fw fa-list',
+            'submenu' => [
+                [
+                    'text' => 'Listado de Pedidos',
+                    'url' => 'admin/pedidos',
                     'classes' => 'bg-white text-black'
                 ],
             ],

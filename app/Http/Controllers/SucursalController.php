@@ -43,12 +43,12 @@ class SucursalController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre_sucursal'=>'required',
-            'nit'=>'required|numeric|min:1',
-            'telefono'=>'required|numeric|min:1',
-            'correo'=>'required|unique:sucursals',
-            'direccion'=>'required',
-            'logo'=>'required|image|mimes:jpg,jpeg,png',
+            'nombre_sucursal' => 'required',
+            'nit' => 'required|digits:9',
+            'telefono' => 'required|digits:8',
+            'correo' => 'required|unique:sucursals',
+            'direccion' => 'required',
+            'logo' => 'required|image|mimes:jpg,jpeg,png',
         ]);
 
         $sucursal = new Sucursal();
@@ -70,11 +70,12 @@ class SucursalController extends Controller
 
         $usuario->assignRole('Administrador');
 
-        Auth::login($usuario);
+        //Auth::login($usuario);
 
-        return redirect()->route('admin.index')
-        ->with('mensaje', 'Se registro la sucursal de manera correcta')
-        ->with('icono','success');
+        //return redirect()->route('admin.index')
+        return redirect()->route('home')
+            ->with('mensaje', 'Se registro la sucursal de manera correcta')
+            ->with('icono', 'success');
     }
 
     /**
@@ -113,11 +114,11 @@ class SucursalController extends Controller
         //$datos = $request->all();
         //return response()->json($datos);
         $request->validate([
-            'nombre_sucursal'=>'required',
-            'nit'=>'required|numeric|min:1',
-            'telefono'=>'required|numeric|min:1',
-            'correo'=>'required|unique:sucursals,correo,'.$id,
-            'direccion'=>'required',
+            'nombre_sucursal' => 'required',
+            'nit' => 'required|digits:9',
+            'telefono' => 'required|digits:8',
+            'correo' => 'required|unique:sucursals,correo,' . $id,
+            'direccion' => 'required',
         ]);
 
         $sucursal = Sucursal::find($id);
@@ -128,8 +129,8 @@ class SucursalController extends Controller
         $sucursal->correo = $request->correo;
         $sucursal->direccion = $request->direccion;
 
-        if($request->hasFile('logo')){
-            Storage::delete('public/'.$sucursal->logo);
+        if ($request->hasFile('logo')) {
+            Storage::delete('public/' . $sucursal->logo);
             $sucursal->logo = $request->file('logo')->store('logos', 'public');
         }
 
@@ -138,7 +139,7 @@ class SucursalController extends Controller
         $usuario_id = Auth::user()->id;
 
         // Validación adicional para el correo del usuario 
-        $request->validate([ 'correo' => 'required|email|unique:users,email,' . $usuario_id, ]);
+        $request->validate(['correo' => 'required|email|unique:users,email,' . $usuario_id,]);
 
         $usuario = User::find($usuario_id);
         $usuario->name = "Admin";
@@ -148,8 +149,8 @@ class SucursalController extends Controller
         $usuario->save();
 
         return redirect()->route('admin.index')
-        ->with('mensaje', 'Se modificaron los datos de la sucursal de manera correcta')
-        ->with('icono','success');
+            ->with('mensaje', 'Se modificaron los datos de la sucursal de manera correcta')
+            ->with('icono', 'success');
     }
 
     /**
