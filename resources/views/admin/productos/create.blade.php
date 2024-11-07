@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="categoria_id">Categoria</label>
+                                        <label for="categoria_id">Categoria <span style="color: red;">*</span></label>
                                         <select name="categoria_id" id="" class="form-control">
                                             @foreach ($categorias as $categoria)
                                             <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="nombre">Nombre del Producto</label>
+                                        <label for="nombre">Nombre del Producto <span style="color: red;">*</span></label>
                                         <input type="text" class="form-control" value="{{old('nombre')}}" name="nombre" required>
                                         @error('nombre')
                                         <small style="color:red">{{$message}}</small>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="precio_venta">Precio de Venta</label>
+                                        <label for="precio_venta">Precio de Venta <span style="color: red;">*</span></label>
                                         <input type="number" class="form-control" value="{{old('precio_venta')}}" min="1" step="0.01" name="precio_venta" required>
                                         @error('precio_venta')
                                         <small style="color:red">{{$message}}</small>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="logo">Imagen del Producto</label>
+                                <label for="logo">Imagen del Producto <span style="color: red;">*</span></label>
                                 <input type="file" name="imagen" id="file" accept=".jpg, .jpeg, .png" class="form-control">
                                 @error('logo')
                                 <small style="color:red">{{$message}}</small>

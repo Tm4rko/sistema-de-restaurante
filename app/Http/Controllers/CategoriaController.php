@@ -40,20 +40,37 @@ class CategoriaController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre'=>'required|unique:categorias',
-            'descripcion'=>'required',
+            'nombre' => 'required|unique:categorias',
+            'descripcion' => 'required',
         ]);
 
-        $categoria = new Categoria();
+        $categoriasExistentes = Categoria::all()->pluck('nombre')->toArray();
 
+        function esSimilar($nuevaCategoria, $categoriasExistentes, $umbral = 85)
+        {
+            foreach ($categoriasExistentes as $categoria) {
+                similar_text(strtolower($nuevaCategoria), strtolower($categoria), $porcentaje);
+                if ($porcentaje > $umbral) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (esSimilar($request->nombre, $categoriasExistentes)) {
+            return
+                redirect()->back()
+                ->withErrors(['nombre' => 'El nombre de la categoría es demasiado similar a una existente.'])
+                ->withInput();
+        }
+
+        $categoria = new Categoria();
         $categoria->nombre = $request->nombre;
         $categoria->descripcion = $request->descripcion;
-
         $categoria->save();
-
         return redirect()->route('admin.categorias.index')
-        ->with('mensaje', 'Se registro la categoria de manera correcta')
-        ->with('icono','success');
+            ->with('mensaje', 'Se registró la categoría de manera correcta')
+            ->with('icono', 'success');
     }
 
     /**
@@ -67,7 +84,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
         return view('admin.categorias.show', compact('categoria'));
     }
- 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -93,8 +110,8 @@ class CategoriaController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre'=>'required|unique:categorias,nombre,'.$id,
-            'descripcion'=>'required',
+            'nombre' => 'required|unique:categorias,nombre,' . $id,
+            'descripcion' => 'required',
         ]);
 
         $categoria = Categoria::find($id);
@@ -105,9 +122,8 @@ class CategoriaController extends Controller
         $categoria->save();
 
         return redirect()->route('admin.categorias.index')
-        ->with('mensaje', 'Se modifico la categoria de manera correcta')
-        ->with('icono','success');
-
+            ->with('mensaje', 'Se modifico la categoria de manera correcta')
+            ->with('icono', 'success');
     }
 
     /**
@@ -121,7 +137,7 @@ class CategoriaController extends Controller
         try {
             // Intentar eliminar la categoría
             Categoria::destroy($id);
-            
+
             return redirect()->route('admin.categorias.index')
                 ->with('mensaje', 'Se eliminó la categoría de manera correcta')
                 ->with('icono', 'success');

@@ -35,15 +35,15 @@
                 {{-- Card Body --}}
                 <div class="card-body {{ $auth_type ?? 'login' }}-card-body {{ config('adminlte.classes_auth_body', '') }}">
                     <form action="{{url('crear-sucursal/create')}}" method="post" enctype="multipart/form-data">
-                       @csrf 
+                        @csrf
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="logo">Logo</label>
+                                    <label for="logo">Logo <span style="color: red;">*</span> </label>
                                     <input type="file" name="logo" id="file" accept=".jpg, .jpeg, .png" class="form-control" required>
                                     @error('logo')
-                                            <small style="color:red">{{$message}}</small>
-                                            @enderror
+                                    <small style="color:red">{{$message}}</small>
+                                    @enderror
                                     <br>
                                     <center><output id="list"></output></center>
                                     <script>
@@ -73,7 +73,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label for="nombre_sucursal">Nombre de la Sucursal</label>
+                                            <label for="nombre_sucursal">Nombre de la Sucursal <span style="color: red;">*</span></label>
                                             <input name="nombre_sucursal" type="text" value="{{old('nombre_sucursal')}}" class="form-control" required>
                                             @error('nombre_sucursal')
                                             <small style="color:red">{{$message}}</small>
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="nit">NIT</label>
+                                            <label for="nit">NIT <span style="color: red;">*</span></label>
                                             <input name="nit" value="{{old('nit')}}" type="number" min="1" class="form-control" required>
                                             @error('nit')
                                             <small style="color:red">{{$message}}</small>
@@ -93,7 +93,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="telefono">Teléfono de la Sucursal</label>
+                                            <label for="telefono">Teléfono de la Sucursal <span style="color: red;">*</span></label>
                                             <input name="telefono" value="{{old('telefono')}}" type="number" min="1" class="form-control" required>
                                             @error('telefono')
                                             <small style="color:red">{{$message}}</small>
@@ -102,7 +102,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label for="correo">Correo de la Sucursal</label>
+                                            <label for="correo">Correo de la Sucursal <span style="color: red;">*</span></label>
                                             <input name="correo" value="{{old('correo')}}" type="email" class="form-control" required>
                                             @error('correo')
                                             <small style="color:red">{{$message}}</small>
@@ -113,7 +113,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="direccion">Dirección</label>
+                                            <label for="direccion">Dirección <span style="color: red;">*</span></label>
                                             <input id="pac-input" value="{{old('direccion')}}" class="form-control" name="direccion" type="text" required>
                                             @error('direccion')
                                             <small style="color:red">{{$message}}</small>
@@ -123,9 +123,12 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8"></div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-block">Crear Sucursal</button>
+                                    <div class="col-md-7"></div>
+                                    <div class="col-md-5">
+                                        <div class="form-group d-flex justify-content-between">
+                                            <a href="{{url('/home')}}" class="btn btn-lg btn-secondary flex-grow-1 mr-2">Cancelar</a>
+                                            <button type="submit" class="btn btn-lg btn-primary flex-grow-1">Crear Sucursal</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
