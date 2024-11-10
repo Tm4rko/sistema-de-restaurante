@@ -15,10 +15,10 @@
                         <h3 class="card-title">Datos del Pedido</h3>
                     </div>
                     <div class="col-md-6">
-                        {!! Form::open(['route'=>['admin.pedido.update'], 'method'=>'PUT']) !!}
+                        {!! Form::open(['route'=>['admin.pedidos.update', $pedido->id], 'method'=>'PUT']) !!}
                         <div class="row">
                             <div class="col-6">
-                                {!! Form::select('estado', ["Nuevo", "Proceso", "Completado"], $pedido->estado, ['class'=>'form-control','required']) !!}
+                                {!! Form::select('estado', ['Nuevo' => 'Nuevo', 'Proceso' => 'Proceso', 'Completado' => 'Completado'], $pedido->estado, ['class'=>'form-control','required']) !!}
                             </div>
                             <div class="col-6">
                                 {{ Form::submit('Actualizar',['class'=>'btn btn-success w-100']) }}

@@ -112,17 +112,15 @@ class SucursalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$datos = $request->all();
-        //return response()->json($datos);
         $request->validate([
             'nombre_sucursal' => 'required',
             'nit' => 'required|digits:9',
             'telefono' => 'required|digits:8',
-            'correo' => 'required|unique:sucursals,correo,' . $id,
+            'correo' => 'required|email|unique:sucursals,correo,' . $id,
             'direccion' => 'required',
         ]);
 
-        $sucursal = Sucursal::find($id);
+        $sucursal = Sucursal::findOrFail($id);
 
         $sucursal->nombre_sucursal = $request->nombre_sucursal;
         $sucursal->nit = $request->nit;
@@ -137,23 +135,12 @@ class SucursalController extends Controller
 
         $sucursal->save();
 
-        $usuario_id = Auth::user()->id;
-
-        // Validación adicional para el correo del usuario 
-        $request->validate(['correo' => 'required|email|unique:users,email,' . $usuario_id,]);
-
-        $usuario = User::find($usuario_id);
-        $usuario->name = "Admin";
-        $usuario->email = $request->correo;
-        $usuario->celular = $request->telefono;
-        $usuario->password = Hash::make($request['nit']);
-        $usuario->sucursal_id = $sucursal->id;
-        $usuario->save();
-
         return redirect()->route('admin.index')
             ->with('mensaje', 'Se modificaron los datos de la sucursal de manera correcta')
             ->with('icono', 'success');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

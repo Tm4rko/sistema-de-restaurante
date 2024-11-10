@@ -10,21 +10,31 @@ use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $sucursal_id = Auth::user()->sucursal_id;
 
         $pedidos = Pedido::with('user')
-        ->where('sucursal_id', $sucursal_id)
-        ->orderByDesc("updated_at")
-        ->get();
-        
+            ->where('sucursal_id', $sucursal_id)
+            ->orderByDesc("updated_at")
+            ->get();
+
         return view('admin.pedidos.index', compact('pedidos'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $pedido = Pedido::find($id);
         return view('admin.pedidos.edit', compact('pedido'));
     }
 
-    
+    public function update(Request $request, $id)
+    {
+        $pedido = Pedido::findOrFail($id);
+        $pedido->fill($request->all());
+        $pedido->save();
+        return redirect()->route('admin.pedidos.index')
+        ->with('mensaje', 'Pedido actualizado correctamente') 
+        ->with('icono', 'success');
+    }
 }

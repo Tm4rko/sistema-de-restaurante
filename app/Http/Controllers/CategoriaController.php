@@ -40,8 +40,8 @@ class CategoriaController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre' => 'required|unique:categorias',
-            'descripcion' => 'required',
+            'nombre' => 'required|unique:categorias|max:50',
+            'descripcion' => 'required|max:200',
         ]);
 
         $categoriasExistentes = Categoria::all()->pluck('nombre')->toArray();
@@ -110,8 +110,8 @@ class CategoriaController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre' => 'required|unique:categorias,nombre,' . $id,
-            'descripcion' => 'required',
+            'nombre' => 'required|unique:categorias,nombre,' . $id. '|max:50',
+            'descripcion' => 'required|max:200',
         ]);
 
         $categoria = Categoria::find($id);
