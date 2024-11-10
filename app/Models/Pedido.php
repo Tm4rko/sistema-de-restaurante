@@ -17,7 +17,18 @@ class Pedido extends Model
         'user_id'
     ];
 
-    public function detalles(){
+    public function detalles()
+    {
         return $this->hasMany(Detalle::class);
+    }
+
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);    
     }
 }

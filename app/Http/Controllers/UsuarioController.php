@@ -18,7 +18,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $sucursal_id = Auth::user()->sucursal_id;
-        $usuarios = User::where('sucursal_id',$sucursal_id)->get();
+        $usuarios = User::where('sucursal_id', $sucursal_id)->get();
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
@@ -45,15 +45,17 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'name'=>'required',
-            'email'=>'required|unique:users',
-            'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/','confirmed'],
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'celular' => ['required', 'digits:8'],
+            'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'],
         ]);
 
         $usuario = new User();
 
         $usuario->name = $request->name;
         $usuario->email = $request->email;
+        $usuario->celular = $request->celular;
         $usuario->password = Hash::make($request->password);
         $usuario->sucursal_id = Auth::user()->sucursal_id;
 
@@ -62,8 +64,8 @@ class UsuarioController extends Controller
         $usuario->assignRole($request->role);
 
         return redirect()->route('admin.usuarios.index')
-        ->with('mensaje', 'Se registro al usuario de manera correcta')
-        ->with('icono','success');
+            ->with('mensaje', 'Se registro al usuario de manera correcta')
+            ->with('icono', 'success');
     }
 
     /**
@@ -104,16 +106,18 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'name'=>'required',
-            'email'=>'required|unique:users,email,'.$id,
-            'password'=>['string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/','confirmed'],
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $id,
+            'celular' => ['required', 'digits:8'],
+            'password' => ['string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'],
         ]);
 
         $usuario = User::find($id);
 
         $usuario->name = $request->name;
         $usuario->email = $request->email;
-        if($request->filled('password')){
+        $usuario->celular = $request->celular;
+        if ($request->filled('password')) {
             $usuario->password = Hash::make($request->password);
         }
         $usuario->sucursal_id = Auth::user()->sucursal_id;
@@ -123,11 +127,8 @@ class UsuarioController extends Controller
         $usuario->syncRoles($request->role);
 
         return redirect()->route('admin.usuarios.index')
-        ->with('mensaje', 'Se modifico al usuario de manera correcta')
-        ->with('icono','success');
-      
-        
-
+            ->with('mensaje', 'Se modifico al usuario de manera correcta')
+            ->with('icono', 'success');
     }
 
     /**
@@ -138,6 +139,14 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::find($id);
+
+        if (Auth::user()->id == $user->id) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'No puedes eliminar tu propia cuenta.')
+                ->with('icono', 'error');
+        }
+
         User::destroy($id);
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Se elimino el usuario de manera correcta')

@@ -9,7 +9,13 @@ class Sucursal extends Model
 {
     use HasFactory;
 
-    public function users(){
+    public function users()
+    {
         return $this->hasMany(User::class);
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class);
     }
 }

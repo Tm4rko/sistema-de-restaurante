@@ -64,6 +64,7 @@ class SucursalController extends Controller
         $usuario = new User();
         $usuario->name = "Admin";
         $usuario->email = $request->correo;
+        $usuario->celular = $request->telefono;
         $usuario->password = Hash::make($request['nit']);
         $usuario->sucursal_id = $sucursal->id;
         $usuario->save();
@@ -144,6 +145,7 @@ class SucursalController extends Controller
         $usuario = User::find($usuario_id);
         $usuario->name = "Admin";
         $usuario->email = $request->correo;
+        $usuario->celular = $request->telefono;
         $usuario->password = Hash::make($request['nit']);
         $usuario->sucursal_id = $sucursal->id;
         $usuario->save();

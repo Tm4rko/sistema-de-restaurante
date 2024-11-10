@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card card-outline card-primary">
             <div class="card-header">
                 <h3 class="card-title">Usuarios Registrados</h3>
@@ -25,6 +25,7 @@
                             <th scope="col">Rol del Usuario</th>
                             <th scope="col">Nombre del Usuario</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Celular</th>
                             <th scope="col" style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                             <td style="text-align: center;">{{$contador++}}</td>
                             <td>{{$usuario->roles->pluck('name')->implode(', ')}}</td>
                             <td>{{$usuario->name}}</td>
+                            <td>{{$usuario->email}}</td>
                             <td>{{$usuario->email}}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">

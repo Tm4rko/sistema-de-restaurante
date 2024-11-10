@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="role">Nombre del Rol</label>
+                                <label for="role">Nombre del Rol <span style="color: red;">*</span></label>
                                 <select name="role" id="" class="form-control">
                                     @foreach ($roles as $role)
                                     <option value="{{$role->name}}" {{$role->name == $usuario->roles->pluck('name')->implode(', ') ? 'selected':''}}>{{$role->name}}</option>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">Nombre del Usuario</label>
+                                <label for="name">Nombre del Usuario <span style="color: red;">*</span></label>
                                 <input type="text" class="form-control" value="{{$usuario->name}}" name="name" required>
                                 @error('name')
                                 <small style="color:red">{{$message}}</small>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">Email <span style="color: red;">*</span></label>
                                 <input type="email" class="form-control" value="{{$usuario->email}}" name="email" required>
                                 @error('email')
                                 <small style="color:red">{{$message}}</small>
@@ -51,7 +51,16 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="celular">Celular <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" value="{{$usuario->celular}}" name="celular" required>
+                                @error('celular')
+                                <small style="color:red">{{$message}}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="password">Password <span style="color: red;">*</span></label>
                                 <input type="password" class="form-control" value="{{old('password')}}" name="password">
                                 @error('password')
                                 <small style="color:red">{{$message}}</small>
@@ -60,7 +69,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="password_confirmation">Confirmar Password</label>
+                                <label for="password_confirmation">Confirmar Password <span style="color: red;">*</span></label>
                                 <input type="password" class="form-control" value="{{old('password_confirmation')}}" name="password_confirmation">
                             </div>
                         </div>

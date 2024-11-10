@@ -36,6 +36,12 @@
                     </div>
                 </div>
                 <div class="row">
+                <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="email">Celular</label>
+                            <p>{{$usuario->email}}</p>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="password">Fecha y Hora de Registro</label>

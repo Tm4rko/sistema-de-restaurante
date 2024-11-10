@@ -108,6 +108,10 @@ Route::group(['middleware' => ['auth', 'role:Administrador']], function () {
     //Rutas para las sucursales
     Route::get('/crear-sucursal', [App\Http\Controllers\SucursalController::class, 'create'])->name('admin.sucursals.create');
     Route::post('/crear-sucursal/create', [App\Http\Controllers\SucursalController::class, 'store'])->name('admin.sucursals.store');
+
+    //Rutas para los pedidos
+    Route::get('/admin/pedidos', [App\Http\Controllers\PedidoController::class, 'index'])->name('admin.pedidos.index');
+    Route::get('/admin/pedidos/{id}/edit', [App\Http\Controllers\PedidoController::class, 'edit'])->name('admin.pedidos.edit');
 });
 
 /*Route::group(['middleware' => ['auth', 'role:Cliente']], function () {

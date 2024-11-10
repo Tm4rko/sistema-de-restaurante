@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('sucursal_id');
-            $table->foreign('sucursal_id')->references('id')->on('sucursals')->onDelete('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('sucursals')->onDelete('restrict');
             $table->rememberToken();
             $table->timestamps();
         });

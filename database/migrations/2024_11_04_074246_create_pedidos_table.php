@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('fechaPedido');
             $table->enum('procedencia',["Web", "App"])->default("App");
             $table->enum('estado',["Nuevo", "Proceso", "Completado"])->default("Nuevo");
+            $table->string('comentario');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('sucursal_id')->references('id')->on('sucursals');
             $table->timestamps();
