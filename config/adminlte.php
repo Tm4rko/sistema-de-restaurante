@@ -395,6 +395,17 @@ return [
             ],
         ],
         [
+            'text' => 'Stock',
+            'icon' => 'fas fa-fw fa-clipboard-list',
+            'submenu' => [
+                [
+                    'text' => 'Stock de Productos',
+                    'url' => 'admin/stocks',
+                    'classes' => 'bg-white text-black'
+                ],
+            ],
+        ],
+        [
             'text' => 'Pedidos',
             'icon' => 'fas fa-fw fa-list',
             'submenu' => [

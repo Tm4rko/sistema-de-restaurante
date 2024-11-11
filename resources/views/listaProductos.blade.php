@@ -86,8 +86,8 @@
                                                 <h5 style="font-weight: bold;">Elige la cantidad de platillos</h5>
                                                 <div class="counter">
                                                     <button class="btn btn-secondary btn-counter" onclick="decreaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">-</button>
-                                                    <span id="count-{{ $producto->id }}">1</span>
-                                                    <button class="btn btn-secondary btn-counter" onclick="increaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">+</button>
+                                                    <span id="count-{{ $producto->id }}">0</span>
+                                                    <button class="btn btn-secondary btn-counter" onclick="increaseCount({{ $producto->id }}, {{ $producto->precio_venta }}, {{ $stocks[$producto->id] ?? 0 }})">+</button>
                                                 </div>
                                                 <br>
                                                 <div>
@@ -204,7 +204,7 @@
                                                 <h5 style="font-weight: bold;">Elige la cantidad</h5>
                                                 <div class="counter">
                                                     <button class="btn btn-secondary btn-counter" onclick="decreaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">-</button>
-                                                    <span id="count-{{ $producto->id }}">1</span>
+                                                    <span id="count-{{ $producto->id }}">0</span>
                                                     <button class="btn btn-secondary btn-counter" onclick="increaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">+</button>
                                                 </div>
                                                 <br>
@@ -234,7 +234,7 @@
     let guarniciones = @json($guarniciones);
 </script>
 <script>
-    let maxCount = 1;
+    let maxCount = 0;
 
     function updateMaxCount(id, price) {
         let totalCount = document.getElementById(`count-${id}`).textContent;
@@ -256,12 +256,16 @@
         });
     }
 
-    function increaseCount(id, price) {
+    function increaseCount(id, price, stock) {
         let count = document.getElementById(`count-${id}`);
         let currentCount = parseInt(count.textContent);
-        count.textContent = currentCount + 1;
-        updateTotalPrice(id, price);
-        updateMaxCount(id, price);
+        if (currentCount < stock) {
+            count.textContent = currentCount + 1;
+            updateTotalPrice(id, price);
+            updateMaxCount(id, price);
+        } else {
+            alert('No hay suficiente stock disponible.');
+        }
     }
 
     function decreaseCount(id, price) {

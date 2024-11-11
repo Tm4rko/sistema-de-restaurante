@@ -38,10 +38,19 @@ class LoginController extends Controller
 
     public function redirectPath()
     {
-        if(auth()->user()->hasRole("Cliente")){
+        /*if(auth()->user()->hasRole("Cliente")){
             return "/index";
         }
-        return "/home";
+        return "/home";*/
+
+        $user = auth()->user();
+
+        if ($user->hasRole("Cliente")) {
+            return route('cliente.select_sucursal.form');
+        } elseif ($user->hasRole("Administrador")) {
+            return route('home'); // o la ruta correspondiente para administradores 
+        }
+        return route('index');
     }
 
     /**

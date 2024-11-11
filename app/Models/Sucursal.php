@@ -18,4 +18,11 @@ class Sucursal extends Model
     {
         return $this->hasMany(Pedido::class);
     }
+
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class, 'stock_sucursales')
+            ->withPivot('stock', 'disponibilidad')
+            ->withTimestamps();
+    }
 }
