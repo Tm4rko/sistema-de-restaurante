@@ -61,8 +61,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="descripcion">Descripcion</label>
-                                    <p>{{$pedido->user_id}}</p>
+                                    <label for="descripcion">Comentarios</label>
+                                    <p>{{$pedido->comentario}}</p>
                                 </div>
                             </div>
                         </div>

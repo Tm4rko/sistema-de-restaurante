@@ -14,7 +14,9 @@ class Pedido extends Model
         'fechaPedido',
         'procedencia',
         'estado',
-        'user_id'
+        'comentario',
+        'user_id',
+        'sucursal_id'
     ];
 
     public function detalles()

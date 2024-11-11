@@ -99,5 +99,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role:Cliente']], function () {
         Route::get('/cliente/select-sucursal', [ClienteController::class, 'showSelectSucursalForm'])->name('cliente.select_sucursal.form');
         Route::post('/cliente/select-sucursal', [ClienteController::class, 'selectSucursal'])->name('cliente.sucursal.select');
+
+        //Rutas para el carrito de compras
+        Route::post('/agregaritem', [App\Http\Controllers\CarritoController::class, 'agregarItem'])->name('agregaritem');
+        Route::get('/vercarrito', [App\Http\Controllers\CarritoController::class, 'verCarrito'])->name('vercarrito');
+        Route::get('/eliminaritem/{id}', [App\Http\Controllers\CarritoController::class, 'eliminarItem'])->name('eliminaritem');
+        Route::get('/eliminarcarrito', [App\Http\Controllers\CarritoController::class, 'eliminarCarrito'])->name('eliminarcarrito');
+        Route::get('/confirmarcarrito', [App\Http\Controllers\CarritoController::class, 'confirmarCarrito'])->name('confirmarcarrito');
+
     });
 });

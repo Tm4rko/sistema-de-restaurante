@@ -50,7 +50,8 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-sm-8">
+        <div class="col-sm-12">
             <br><br>
             <h1 class="text-center">Realiza tu Pedido en Línea</h1>
             <div class="row"> @foreach ($categorias as $categoria) <div class="col-sm-12">
@@ -86,7 +87,7 @@
                                                 <h5 style="font-weight: bold;">Elige la cantidad de platillos</h5>
                                                 <div class="counter">
                                                     <button class="btn btn-secondary btn-counter" onclick="decreaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">-</button>
-                                                    <span id="count-{{ $producto->id }}">0</span>
+                                                    <span id="count-{{ $producto->id }}">1</span>
                                                     <button class="btn btn-secondary btn-counter" onclick="increaseCount({{ $producto->id }}, {{ $producto->precio_venta }}, {{ $stocks[$producto->id] ?? 0 }})">+</button>
                                                 </div>
                                                 <br>
@@ -153,7 +154,12 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary">Añadir al Pedido</button>
+                                        <!--<button type="button" class="btn btn-primary">Añadir al Pedido</button>-->`
+                                        <form action="{{route('agregaritem')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="producto_id" value="{{$producto->id}}">
+                                            <input type="submit" value="Añadir al Carrito" class="btn btn-primary">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -166,11 +172,9 @@
                 @endforeach
             </div>
         </div>
-
-
-        <div class="col-md-10">
+        
+        <div class="col-sm-12">
             <br><br>
-
             <div class="row"> @foreach ($categoriasNoCarnes as $categoria) <div class="col-sm-12">
                     <h2 class="text-center mt-5">{{$categoria->nombre}}</h2>
                     <div class="row justify-content-center"> @forelse ($categoria->productos as $producto)
@@ -204,7 +208,7 @@
                                                 <h5 style="font-weight: bold;">Elige la cantidad</h5>
                                                 <div class="counter">
                                                     <button class="btn btn-secondary btn-counter" onclick="decreaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">-</button>
-                                                    <span id="count-{{ $producto->id }}">0</span>
+                                                    <span id="count-{{ $producto->id }}">1</span>
                                                     <button class="btn btn-secondary btn-counter" onclick="increaseCount({{ $producto->id }}, {{ $producto->precio_venta }})">+</button>
                                                 </div>
                                                 <br>
@@ -227,6 +231,31 @@
                 @endforeach
             </div>
         </div>
+        </div>
+        
+        @if (count(Cart::content()))
+        <div class="col-sm-3">
+            <p class="text-center">Resumen del Carrito</p>
+            <table class="table table-striped">
+                <tbody>
+                    @foreach (Cart::content() as $item)
+                        <tr>
+                            <td>{{$item->name}}</td>
+                            <td>{{$item->qty}} x {{$item->price}}</td>
+                            <td>{{number_format($item->qty * $item->price,2)}}</td>
+                            <td><a href="eliminaritem/{{$item->rowId}}" class="btn btn-sm text-danger">x</a></td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="4"><p class="text-end m-0 p-0">Total Bs. {{Cart::total()}}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-center"><a href="vercarrito" class="btn btn-outline-success btn-sm">Ver Carrito</a></p>
+        </div>
+        @endif
+
+        
     </div>
 </div>
 
