@@ -350,7 +350,7 @@ return [
                 ],
             ],
         ],
-        [
+        /*[
             'text' => 'Roles',
             'icon' => 'fas fa-fw fa-user-check',
             'submenu' => [
@@ -360,7 +360,7 @@ return [
                     'classes' => 'bg-white text-black'
                 ],
             ],
-        ],
+        ],*/
         [
             'text' => 'Usuarios',
             'icon' => 'fas fa-fw fa-users',

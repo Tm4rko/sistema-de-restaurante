@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth', 'role:Cliente']], function () {
 
 
 // Rutas protegidas por autenticación y roles 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'no-cache']], function () {
     Route::group(['middleware' => ['role:Administrador']], function () {
         Route::get('/home', [App\Http\Controllers\AdminController::class, 'index'])->name('home');
         Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');

@@ -18,7 +18,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-hover">
+                <table class="table table-hover table-responsive">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" style="text-align: center;">Nro</th>

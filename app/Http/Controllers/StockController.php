@@ -27,12 +27,12 @@ class StockController extends Controller
         // Validar el stock y la disponibilidad 
         $request->validate([
             'stock' => 'required|integer|min:0',
-            'disponibilidad' => 'required|boolean',
+            /*'disponibilidad' => 'required|boolean',*/
         ]);
         // Actualizar el stock y la disponibilidad 
         $sucursal->productos()->updateExistingPivot($productoId, [
             'stock' => $request->stock,
-            'disponibilidad' => $request->disponibilidad,
+            /*'disponibilidad' => $request->disponibilidad,*/
         ]);
 
         return redirect()->route('admin.stocks.index')

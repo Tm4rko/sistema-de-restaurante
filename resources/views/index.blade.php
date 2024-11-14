@@ -65,8 +65,9 @@
     <div class="overlay">
       <h2>Menú</h2>
       <hr>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit duis sed.</p>
+      <h4>"Sabores ahumados y brasas, para los amantes de la carne."</h4>
     </div>
+    <br>
   </div>
   <div class="container">
     <div class="row">
@@ -75,31 +76,57 @@
           <h2 class="menu-section-title">Cortes del Día</h2>
           <hr>
           <div class="menu-item">
-            <div class="menu-item-name"> Delicious Dish </div>
-            <div class="menu-item-price"> $45 </div>
-            <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
+            <div class="row">
+              <div class="col">
+                <div class="menu-item-name"> Ahumado de Cerdo </div>
+              </div>
+              <div class="col">
+                <div class="menu-item-price text-end"> Bs. 45 </div>
+              </div>
+              <div class="menu-item-description"> Ahumado de cerdo a la parrila, con una guarnición y ensalada </div>
+            </div>
           </div>
+          <br>
           <div class="menu-item">
-            <div class="menu-item-name"> Delicious Dish </div>
-            <div class="menu-item-price"> $30 </div>
-            <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
+            <div class="row">
+              <div class="col">
+                <div class="menu-item-name"> Bife de Chorizo </div>
+              </div>
+              <div class="col">
+                <div class="menu-item-price text-end"> Bs. 40 </div>
+              </div>
+              <div class="menu-item-description"> Bife de Chorizo a la parrila, con una guarnición y ensalada </div>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-6">
         <div class="menu-section">
-          <h2 class="menu-section-title">Bebidas</h2>
+          <h2 class="menu-section-title">Cortes del Dia</h2>
           <hr>
           <div class="menu-item">
-            <div class="menu-item-name"> Delicious Dish </div>
-            <div class="menu-item-price"> $35 </div>
-            <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
+            <div class="row">
+              <div class="col">
+                <div class="menu-item-name"> Churrasco </div>
+              </div>
+              <div class="col">
+                <div class="menu-item-price text-end"> Bs. 40 </div>
+              </div>
+              <div class="menu-item-description"> Churrasco, con una guarnición y ensalada </div>
+            </div>
           </div>
+          <br>
           <div class="menu-item">
-            <div class="menu-item-name"> Delicious Dish </div>
-            <div class="menu-item-price"> $30 </div>
-            <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
+            <div class="row">
+              <div class="col">
+                <div class="menu-item-name"> Punta de S </div>
+              </div>
+              <div class="col">
+                <div class="menu-item-price text-end"> Bs. 35 </div>
+              </div>
+              <div class="menu-item-description"> Punta de S a la parrilla, con una guarnición y ensalada </div>
+            </div>
           </div>
         </div>
       </div>

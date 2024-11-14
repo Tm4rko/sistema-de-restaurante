@@ -20,11 +20,12 @@ class CarritoController extends Controller
             'id' => $producto->id,
             'name' => $producto->nombre,
             'price' => $producto->precio_venta,
-            'qty' => 1,
+            'qty' => $request->qty,
             'weight' => 1,
             'options' => [
                 'imagen' => $producto->imagen,
                 'nombre' => null,
+                'especificacion' => $request->especificacion ?? '',
             ]
         ]);
 
@@ -80,11 +81,17 @@ class CarritoController extends Controller
             $detalle->precio = $item->price;
             $detalle->cantidad = $item->qty;
             $detalle->importe = $item->price * $item->qty;
-            $detalle->especificacion = "especificacion de prueba";
+            $detalle->especificacion = $item->options->especificacion;
             $detalle->producto_id = $item->id;
             $detalle->pedido_id = $pedido->id;
 
             $detalle->save();
+
+            // Reducir el stock del producto en la sucursal seleccionada 
+            \DB::table('stock_sucursales')
+                ->where('sucursal_id', $pedido->sucursal_id)
+                ->where('producto_id', $item->id)
+                ->decrement('stock', $item->qty);
         }
 
         Cart::destroy();

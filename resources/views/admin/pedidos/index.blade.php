@@ -10,10 +10,7 @@
     <div class="col-md-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Productos Registrados</h3>
-                <div class="card-tools">
-                    <a href="{{url('/admin/productos/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Crear nuevo</a>
-                </div>
+                <h3 class="card-title">Pedidos Activos</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -31,7 +28,7 @@
                         </thead>
                         <tbody>
                             <?php $contador = 1; ?>
-                            @forelse ($pedidos as $pedido)
+                            @forelse ($pedidosActivos as $pedido)
                             <tr>
                                 <td style="text-align: center; vertical-align: middle;">{{$contador++}}</td>
                                 <td style="vertical-align: middle;">{{$pedido->user->name}}</td>
@@ -47,7 +44,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td></td>
+                                <td colspan="7" style="text-align: center;">No hay pedidos activos.</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -55,6 +52,52 @@
                 </div>
             </div>
         </div>
+
+        <div class="card card-outline card-secondary mt-5">
+            <div class="card-header">
+                <h3 class="card-title">Pedidos Completados</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="mitabla2" class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" style="text-align: center;">Nro</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Fecha-Hora Pedido</th>
+                                <th scope="col">Procedencia</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col" style="text-align: center;">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $contador = 1; ?>
+                            @forelse ($pedidosCompletados as $pedido)
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;">{{$contador++}}</td>
+                                <td style="vertical-align: middle;">{{$pedido->user->name}}</td>
+                                <td style="vertical-align: middle;">{{$pedido->fechaPedido}}</td>
+                                <td style="vertical-align: middle;">{{$pedido->procedencia}}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{$pedido->total}}</td>
+                                <td style="vertical-align: middle;">{{$pedido->estado}}</td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="{{url('/admin/pedidos/'.$pedido->id.'/edit')}}" class="btn btn-success btn-sm"><i class="fas fa-pencil"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="7" style="text-align: center;">No hay pedidos completados.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @stop

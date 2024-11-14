@@ -19,19 +19,21 @@
 
             @if (Cart::content()->count())
             <table class="table table-striped">
-                <thead>
+                <thead class="text-center">
                     <th>Foto</th>
                     <th>Producto</th>
+                    <th>Detalles</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>SubTotal</th>
                     <th></th>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     @foreach (Cart::content() as $item)
                     <tr>
                         <td><img src="{{asset('storage/'.$item->options->imagen)}}" width="100"></td>
                         <td>{{$item->name}}</td>
+                        <td class="text-wrap" style="max-width: 200px;">{{$item->options->especificacion}}</td>
                         <td>{{$item->qty}}</td>
                         <td>{{$item->price}}</td>
                         <td>{{number_format($item->qty * $item->price,2)}}</td>

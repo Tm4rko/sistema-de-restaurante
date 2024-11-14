@@ -13,13 +13,20 @@ class PedidoController extends Controller
     public function index()
     {
         $sucursal_id = Auth::user()->sucursal_id;
-
-        $pedidos = Pedido::with('user')
+        // Obtener pedidos en estado "Nuevo" o "Proceso" 
+        $pedidosActivos = Pedido::with('user')
             ->where('sucursal_id', $sucursal_id)
-            ->orderByDesc("updated_at")
+            ->whereIn('estado', ['Nuevo', 'Proceso'])
+            ->orderBy('created_at', 'asc')
+            ->get();
+        // Obtener pedidos en estado "Completado" 
+        $pedidosCompletados = Pedido::with('user')
+            ->where('sucursal_id', $sucursal_id)
+            ->where('estado', 'Completado')
+            ->orderBy('created_at', 'asc')
             ->get();
 
-        return view('admin.pedidos.index', compact('pedidos'));
+        return view('admin.pedidos.index', compact('pedidosActivos', 'pedidosCompletados'));
     }
 
     public function edit($id)
@@ -34,7 +41,7 @@ class PedidoController extends Controller
         $pedido->fill($request->all());
         $pedido->save();
         return redirect()->route('admin.pedidos.index')
-        ->with('mensaje', 'Pedido actualizado correctamente') 
-        ->with('icono', 'success');
+            ->with('mensaje', 'Pedido actualizado correctamente')
+            ->with('icono', 'success');
     }
 }

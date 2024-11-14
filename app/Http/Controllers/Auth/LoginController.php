@@ -26,7 +26,7 @@ class LoginController extends Controller
     // Redirigir a la vista de login después de logout
     protected function loggedOut(Request $request)
     {
-        return redirect('/login');
+        return redirect('/');
     }
 
     /**
