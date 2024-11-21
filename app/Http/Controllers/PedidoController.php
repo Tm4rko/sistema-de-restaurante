@@ -23,7 +23,7 @@ class PedidoController extends Controller
         $pedidosCompletados = Pedido::with('user')
             ->where('sucursal_id', $sucursal_id)
             ->where('estado', 'Completado')
-            ->orderBy('created_at', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('admin.pedidos.index', compact('pedidosActivos', 'pedidosCompletados'));
@@ -32,7 +32,12 @@ class PedidoController extends Controller
     public function edit($id)
     {
         $pedido = Pedido::find($id);
-        return view('admin.pedidos.edit', compact('pedido'));
+
+        $pedidosActivos = Pedido::whereIn('estado', ['Nuevo', 'Proceso'])->orderBy('created_at', 'asc')->get();
+        if ($pedido) {
+            return view('admin.pedidos.edit', compact('pedido', 'pedidosActivos'));
+        }
+        return redirect()->back()->with('error', 'Pedido no encontrado');
     }
 
     public function update(Request $request, $id)

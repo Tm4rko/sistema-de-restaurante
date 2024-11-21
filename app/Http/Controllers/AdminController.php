@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Empresa;
+use App\Models\Pedido;
 use App\Models\Producto;
 use App\Models\Sucursal;
 use App\Models\User;
@@ -21,6 +22,10 @@ class AdminController extends Controller
 
         $sucursal_id = Auth::check() ? Auth::user()->sucursal_id : redirect()->route('login')->send();
         $sucursal = Sucursal::where('id', $sucursal_id)->first();
-        return view('admin.index', compact('sucursal', 'total_roles', 'total_usuarios', 'total_categorias', 'total_productos'));
+
+        // Contar los pedidos nuevos 
+        $pedidosNuevosCount = Pedido::where('estado', 'Nuevo')->count();
+        return view('admin.index', compact('sucursal', 'total_roles', 'total_usuarios',
+         'total_categorias', 'total_productos', 'pedidosNuevosCount'));
     }
 }

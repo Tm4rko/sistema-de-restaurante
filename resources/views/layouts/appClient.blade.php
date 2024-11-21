@@ -50,8 +50,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{{route('listaProductos')}}">Realiza tu PEDIDO</a>
             </li>
-
-
           </ul>
 
           <!-- Right Side Of Navbar -->

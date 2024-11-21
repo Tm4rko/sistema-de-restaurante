@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PedidoCreado;
 use App\Models\Detalle;
 use App\Models\Pedido;
 use App\Models\Producto;
@@ -93,6 +94,9 @@ class CarritoController extends Controller
                 ->where('producto_id', $item->id)
                 ->decrement('stock', $item->qty);
         }
+
+        // Despachar el evento que indica que un nuevo pedido ha sido creado 
+        event(new PedidoCreado($pedido));
 
         Cart::destroy();
         return redirect()->back()->with("success", "¡Tu pedido ha sido registrado con éxito!");

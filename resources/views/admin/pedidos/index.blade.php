@@ -28,17 +28,17 @@
                         </thead>
                         <tbody>
                             <?php $contador = 1; ?>
-                            @forelse ($pedidosActivos as $pedido)
+                            @forelse ($pedidosActivos as $index => $pedido)
                             <tr>
-                                <td style="text-align: center; vertical-align: middle;">{{$contador++}}</td>
-                                <td style="vertical-align: middle;">{{$pedido->user->name}}</td>
-                                <td style="vertical-align: middle;">{{$pedido->fechaPedido}}</td>
-                                <td style="vertical-align: middle;">{{$pedido->procedencia}}</td>
-                                <td style="text-align: center; vertical-align: middle;">{{$pedido->total}}</td>
-                                <td style="vertical-align: middle;">{{$pedido->estado}}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ $contador++ }}</td>
+                                <td style="vertical-align: middle;">{{ $pedido->user->name }}</td>
+                                <td style="vertical-align: middle;">{{ $pedido->fechaPedido }}</td>
+                                <td style="vertical-align: middle;">{{ $pedido->procedencia }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ $pedido->total }}</td>
+                                <td style="vertical-align: middle;">{{ $pedido->estado }}</td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{url('/admin/pedidos/'.$pedido->id.'/edit')}}" class="btn btn-success btn-sm"><i class="fas fa-pencil"></i></a>
+                                        <a href="{{ url('/admin/pedidos/' . $pedido->id . '/edit') }}" class="btn btn-success btn-sm"><i class="fas fa-pencil"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -52,6 +52,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div class="card card-outline card-secondary mt-5">
             <div class="card-header">

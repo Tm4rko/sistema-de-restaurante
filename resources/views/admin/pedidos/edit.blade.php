@@ -15,19 +15,30 @@
                         <h3 class="card-title">Datos del Pedido</h3>
                     </div>
                     <div class="col-md-6">
-                        {!! Form::open(['route'=>['admin.pedidos.update', $pedido->id], 'method'=>'PUT']) !!}
+                        {!! Form::open(['route' => ['admin.pedidos.update', $pedido->id], 'method' => 'PUT']) !!}
                         <div class="row">
                             <div class="col-6">
-                                {!! Form::select('estado', ['Nuevo' => 'Nuevo', 'Proceso' => 'Proceso', 'Completado' => 'Completado'], $pedido->estado, ['class'=>'form-control','required']) !!}
+                                @if ($pedido->id === $pedidosActivos->first()->id)
+                                {!! Form::select('estado',
+                                ['Nuevo' => 'Nuevo', 'Proceso' => 'Proceso', 'Completado' => 'Completado'],
+                                $pedido->estado,
+                                ['class' => 'form-control', 'required']
+                                ) !!}
+                                @else
+                                {!! Form::select('estado',
+                                ['Nuevo' => 'Nuevo', 'Proceso' => 'Proceso'],
+                                $pedido->estado,
+                                ['class' => 'form-control', 'required']
+                                ) !!}
+                                @endif
                             </div>
                             <div class="col-6">
-                                {{ Form::submit('Actualizar',['class'=>'btn btn-success w-100']) }}
+                                {{ Form::submit('Actualizar', ['class' => 'btn btn-success w-100']) }}
                             </div>
                         </div>
-                        {!!Form::close() !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -36,19 +47,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Nombre del Cliente</label>
-                                    <p>{{$pedido->user->name}}</p>
+                                    <p>{{ $pedido->user->name }}</p>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="celular">Celular</label>
-                                    <p>{{$pedido->user->celular}}</p>
+                                    <p>{{ $pedido->user->celular }}</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="email">Correo Electrónico</label>
-                                    <p>{{$pedido->user->email}}</p>
+                                    <p>{{ $pedido->user->email }}</p>
                                 </div>
                             </div>
                         </div>
@@ -56,13 +67,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="fecha_ingreso">Fecha del Pedido</label>
-                                    <p>{{$pedido->fechaPedido}}</p>
+                                    <p>{{ $pedido->fechaPedido }}</p>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="descripcion">Comentarios</label>
-                                    <p>{{$pedido->comentario}}</p>
+                                    <p>{{ $pedido->comentario }}</p>
                                 </div>
                             </div>
                         </div>
