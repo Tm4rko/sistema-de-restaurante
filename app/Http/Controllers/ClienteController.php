@@ -20,7 +20,7 @@ class ClienteController extends Controller
         $request->validate(['sucursal_id' => 'required|exists:sucursals,id',]); // Guardar la sucursal seleccionada en la sesión 
         session(['sucursal_id' => $request->sucursal_id]);
         session()->forget('showSucursalModal'); // Limpia la sesión aquí
-        return redirect()->back();
+        return redirect()->route('index');
     }
     /*public function selectSucursal(Request $request)
     {

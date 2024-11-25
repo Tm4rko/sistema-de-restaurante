@@ -166,7 +166,14 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                             @auth
-                                            <form action="{{route('agregaritem')}}" method="post" onsubmit="setFormValues({{ $producto->id }})">
+                                            <!--<form action="{{route('agregaritem')}}" method="post" onsubmit="setFormValues({{ $producto->id }})">
+                                                @csrf
+                                                <input type="hidden" name="producto_id" value="{{$producto->id}}">
+                                                <input type="hidden" id="qty-{{ $producto->id }}" name="qty" value="1">
+                                                <input type="hidden" id="specification-{{ $producto->id }}" name="especificacion" value="">
+                                                <input type="submit" value="Añadir al Carrito" class="btn btn-primary">
+                                            </form>-->
+                                            <form action="{{route('agregaritem')}}" method="post" onsubmit="return setFormValues({{ $producto->id }})">
                                                 @csrf
                                                 <input type="hidden" name="producto_id" value="{{$producto->id}}">
                                                 <input type="hidden" id="qty-{{ $producto->id }}" name="qty" value="1">
@@ -417,7 +424,7 @@
 
     //Mandar cantidad de platillos al controlador
 
-    function setFormValues(productId) {
+    /*function setFormValues(productId) {
         let qty = document.getElementById(`count-${productId}`).textContent;
         let medio = document.getElementById(`count-medio-${productId}`).textContent;
         let trescuartos = document.getElementById(`count-trescuartos-${productId}`).textContent;
@@ -431,7 +438,38 @@
         let specification = `Término de carne: Medio: ${medio}, Tres Cuartos: ${trescuartos}, Bien Cocido: ${biencocido}, Guarniciones: ${guarnicionesText}`;
         document.getElementById(`qty-${productId}`).value = qty;
         document.getElementById(`specification-${productId}`).value = specification;
+    }*/
+   //Mandar cantidad de platillos al controlador
+function setFormValues(productId) {
+    let qty = parseInt(document.getElementById(`count-${productId}`).textContent);
+    let medio = parseInt(document.getElementById(`count-medio-${productId}`).textContent);
+    let trescuartos = parseInt(document.getElementById(`count-trescuartos-${productId}`).textContent);
+    let biencocido = parseInt(document.getElementById(`count-biencocido-${productId}`).textContent);
+
+    let guarniciones = @json($guarniciones);
+    let totalGuarniciones = 0;
+    let guarnicionesText = '';
+
+    guarniciones.forEach(guarnicion => {
+        let count = parseInt(document.getElementById(`count-guarnicion-${productId}-${guarnicion.id}`).textContent);
+        guarnicionesText += `${guarnicion.nombre}: ${count}, `;
+        totalGuarniciones += count;
+    });
+
+    let totalTerms = medio + trescuartos + biencocido;
+
+    if (totalGuarniciones !== qty || totalTerms !== qty) {
+        alert(`Debes seleccionar exactamente ${qty} guarniciones y ${qty} términos de la carne.`);
+        return false; // Evita que el formulario se envíe
     }
+
+    let specification = `Término de carne: Medio: ${medio}, Tres Cuartos: ${trescuartos}, Bien Cocido: ${biencocido}, Guarniciones: ${guarnicionesText}`;
+    
+    document.getElementById(`qty-${productId}`).value = qty;
+    document.getElementById(`specification-${productId}`).value = specification;
+    return true;
+}
+
 </script>
 
 @stop
