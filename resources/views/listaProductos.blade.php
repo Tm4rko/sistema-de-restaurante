@@ -193,12 +193,36 @@
                 <br><br>
                 <div class="row"> @foreach ($categoriasNoCarnes as $categoria) <div class="col-sm-12">
                         <h2 class="text-center mt-5">{{$categoria->nombre}}</h2>
-                        <div class="row justify-content-center"> @forelse ($categoria->productos as $producto)
+                        <div class="row justify-content-center">
+                            @forelse ($categoria->productos as $producto)
+                            @php
+                            $stock = $stocks[$producto->id] ?? null;
+                            $disponibilidad = $stock !== null ? \DB::table('stock_sucursales')
+                            ->where('sucursal_id', $sucursalSeleccionada->id)
+                            ->where('producto_id', $producto->id)
+                            ->value('disponibilidad') : null;
+                            @endphp
+
+                            @if($stock === 0 || $disponibilidad === 0)
+                            <div class="col-sm-6 mt-3 mb-3">
+                                <div class="clickable-element" style="background-color: #f8d7da; padding: 10px; border: 1px solid #f5c6cb;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="{{ asset('storage/' . $producto->imagen) }}" class="img-fluid" alt="{{ $producto->nombre }}">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h4 class="text-center">{{ $producto->nombre }}</h4>
+                                            <p class="text-center" style="color: #721c24;">Producto no disponible</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @else
                             <div class="col-sm-6 mt-3 mb-3">
                                 <div class="clickable-element" data-bs-toggle="modal" data-bs-target="#productoModal-{{ $producto->id }}">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <img src="{{asset('storage/'.$producto->imagen)}}" class="img-fluid" alt="{{$producto->nombre}}">
+                                            <img src="{{ asset('storage/' . $producto->imagen) }}" class="img-fluid" alt="{{ $producto->nombre }}">
                                         </div>
                                         <div class="col-md-8">
                                             <h4 class="text-center">{{ $producto->nombre }}</h4>
@@ -207,6 +231,9 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
+
+
                             <!-- Modal -->
                             <div class="modal fade" id="productoModal-{{ $producto->id }}" tabindex="-1" aria-labelledby="productoModalLabel-{{ $producto->id }}" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">

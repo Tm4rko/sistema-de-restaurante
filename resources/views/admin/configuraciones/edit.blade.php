@@ -25,7 +25,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="col-md-3">
+                        <!--<div class="col-md-3">
                             <div class="form-group">
                                 <label for="logo">Logo</label>
                                 <input type="file" name="logo" id="file" accept=".jpg, .jpeg, .png" class="form-control">
@@ -62,24 +62,24 @@
                                     document.getElementById('file').addEventListener('change', archivo, false);
                                 </script>
                             </div>
-                        </div>
-                        <div class="col-md-9">
+                        </div>-->
+                        <div class="col-md-12">
                             <div class="row">
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="nombre_sucursal">Nombre de la Sucursal</label>
-                                        <input name="nombre_sucursal" type="text" value="{{$sucursal->nombre_sucursal}}" class="form-control" required>
+                                        <input name="nombre_sucursal" type="text" value="{{$sucursal->nombre_sucursal}}" class="form-control" maxlength="50" onkeypress="soloLetras(event)" required>
                                         @error('nombre_sucursal')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="nit">NIT</label>
-                                        <input name="nit" value="{{$sucursal->nit}}" type="number" min="1" class="form-control" required>
+                                        <input name="nit" value="{{$sucursal->nit}}" type="number" min="1" class="form-control" onkeydown="evitarPunto(event)" required>
                                         @error('nit')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
@@ -90,13 +90,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="telefono">Teléfono de la Sucursal</label>
-                                        <input name="telefono" value="{{$sucursal->telefono}}" type="number" min="1" class="form-control" required>
+                                        <input name="telefono" value="{{$sucursal->telefono}}" type="number" min="1" class="form-control" onkeydown="evitarPunto(event)" required>
                                         @error('telefono')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="correo">Correo de la Sucursal</label>
                                         <input name="correo" value="{{$sucursal->correo}}" type="email" class="form-control" required>
@@ -107,10 +107,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="direccion">Direccion</label>
-                                        <input id="pac-input" value="{{$sucursal->direccion}}" class="form-control" name="direccion" type="text" required>
+                                        <input id="pac-input" value="{{$sucursal->direccion}}" class="form-control" name="direccion" type="text" maxlength="350" required>
                                         @error('direccion')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror

@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-
 @section('content_header')
 <h1>Productos/Listado de Productos</h1>
 <hr>
@@ -18,7 +17,8 @@
             </div>
 
             <div class="card-body">
-                <table id="mitabla" class="table table-hover table-responsive">
+                <div class="table-responsive">
+                <table id="mitabla" class="table table-hover">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" style="text-align: center;">Nro</th>
@@ -60,8 +60,8 @@
                                                 icon: 'question',
                                                 showDenyButton: true,
                                                 confirmButtonText: 'Eliminar',
-                                                confirmButtonColor: '#a5161d',
-                                                denyButtonColor: '#270a0a',
+                                                confirmButtonColor: '#ef190f',
+                                                denyButtonColor: '#6c757d',
                                                 denyButtonText: 'Cancelar',
                                             }).then((result) => {
                                                 if(result.isConfirmed){
@@ -77,6 +77,8 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
+                
             </div>
 
         </div>
@@ -90,10 +92,11 @@
 @stop
 
 @section('js')
-    <script>
+<script>
+    $(document).ready(function() {
         $('#mitabla').DataTable({
             "pageLength": 5,
-            "language":{
+            "language": {
                 "emptyTable": "No hay información",
                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
                 "infoEmpty": "Mostrando 0 a 0 de 0 Productos",
@@ -107,11 +110,29 @@
                 "zeroRecords": "Sin resultados encontrados",
                 "paginate": {
                     "first": "Primero",
-                    "last": "Ultimo",
+                    "last": "Último",
                     "next": "Siguiente",
                     "previous": "Anterior"
                 }
-            },
+            }
         });
-    </script>
+
+        @if (session('mensaje'))
+            Swal.fire({
+                text: '{{ session('mensaje') }}',
+                icon: '{{ session('icono') }}',
+                confirmButtonText: 'Aceptar',
+                position: 'center',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        @endif
+    });
+</script>
 @stop

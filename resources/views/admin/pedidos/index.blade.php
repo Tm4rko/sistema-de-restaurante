@@ -110,16 +110,36 @@
 
 @section('js')
 <script>
+    // Mostrar mensaje de éxito o error usando SweetAlert
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('mensaje'))
+            Swal.fire({
+                text: '{{ session('mensaje') }}',
+                icon: '{{ session('icono') }}',
+                confirmButtonText: 'Aceptar',
+                position: 'center',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        @endif
+    });
+
     $('#mitabla').DataTable({
         "pageLength": 5,
         "language": {
             "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
-            "infoEmpty": "Mostrando 0 a 0 de 0 Productos",
-            "infoFiltered": "(Filtrado de _MAX_ total Productos)",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Pedidos",
+            "infoEmpty": "Mostrando 0 a 0 de 0 Pedidos",
+            "infoFiltered": "(Filtrado de _MAX_ total Pedidos)",
             "infoPostFix": "",
             "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Productos",
+            "lengthMenu": "Mostrar _MENU_ Pedidos",
             "loadingRecords": "Cargando...",
             "processing": "Procesando...",
             "search": "Buscador:",

@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-3 col-sm-6 col-12">
+    <!--<div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <a href="{{url('/admin/roles')}}" class="info-box-icon bg-info">
                 <span class=""><i class="fas fa-user-check"></i></span>
@@ -19,7 +19,7 @@
                 <span class="info-box-number">{{$total_roles}} roles</span>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <a href="{{url('/admin/usuarios')}}" class="info-box-icon bg-primary">
@@ -58,9 +58,28 @@
 
 @section('css')
 
-
 @stop
 
 @section('js')
-
+<script>
+    // Mostrar mensaje de éxito o error usando SweetAlert
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('mensaje'))
+            Swal.fire({
+                text: '{{ session('mensaje') }}',
+                icon: '{{ session('icono') }}',
+                confirmButtonText: 'Aceptar',
+                position: 'center',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        @endif
+    });
+</script>
 @stop

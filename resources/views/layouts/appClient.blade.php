@@ -112,21 +112,28 @@
 
 
   <!-- Modal para Selección de Sucursal -->
-  <div class="modal fade" id="sucursalModal" tabindex="-1" aria-labelledby="sucursalModalLabel" aria-hidden="true">
+  <!--<div class="modal fade" id="sucursalModal" tabindex="-1" aria-labelledby="sucursalModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="{{ route('cliente.sucursal.select') }}" method="POST">
-          @csrf
+        <form id="sucursalForm" action="{{ route('cliente.sucursal.select') }}" method="POST"> @csrf <input type="hidden" name="redirect_to" value="{{ url()->current() }}">
           <div class="modal-header">
             <h5 class="modal-title" id="sucursalModalLabel">Seleccione la Sucursal</h5>
           </div>
-          <div class="modal-body"> @foreach($sucursales as $sucursal)
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="sucursal_id" id="sucursal{{ $sucursal->id }}" value="{{ $sucursal->id }}" required>
-              <label class="form-check-label" for="sucursal{{ $sucursal->id }}"> {{ $sucursal->nombre_sucursal }} </label>
-            </div>
-            @endforeach
+          <div class="modal-body"> @foreach($sucursales as $sucursal) <div class="form-check"> <input class="form-check-input" type="radio" name="sucursal_id" id="sucursal{{ $sucursal->id }}" value="{{ $sucursal->id }}" required> <label class="form-check-label" for="sucursal{{ $sucursal->id }}">{{ $sucursal->nombre_sucursal }}</label> </div> @endforeach </div>
+          <div class="modal-footer"> <button type="submit" class="btn btn-primary">Seleccionar</button> </div>
+        </form>
+      </div>
+    </div>
+  </div>-->
+  <!-- Modal para Selección de Sucursal -->
+  <div class="modal fade" id="sucursalModal" tabindex="-1" aria-labelledby="sucursalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="sucursalForm" action="{{ route('cliente.sucursal.select') }}" method="POST"> @csrf <input type="hidden" name="redirect_to" value="{{ url()->current() }}">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sucursalModalLabel">Seleccione la Sucursal</h5>
           </div>
+          <div class="modal-body"> @foreach($sucursales as $sucursal) <div class="form-check"> <input class="form-check-input" type="radio" name="sucursal_id" id="sucursal{{ $sucursal->id }}" value="{{ $sucursal->id }}" required> <label class="form-check-label" for="sucursal{{ $sucursal->id }}">{{ $sucursal->nombre_sucursal }}</label> </div> @endforeach </div>
           <div class="modal-footer"> <button type="submit" class="btn btn-primary">Seleccionar</button> </div>
         </form>
       </div>
@@ -145,3 +152,14 @@
     @endif
   });
 </script>
+
+<!--<script>
+  $(document).ready(function() {
+    @if(session('showSucursalModal')) $('#sucursalModal').modal({
+      backdrop: 'static',
+      keyboard: false,
+      show: true
+    });
+    @endif
+  });
+</script>-->

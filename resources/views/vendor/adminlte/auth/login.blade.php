@@ -92,7 +92,7 @@
             </a>
         </p>
     @endif
-
+    <p class="my-0"> <a href="{{ route('index') }}"> {{ __('Volver a la página principal') }} </a> </p>
     {{-- Register link --}}
     @if($register_url)
         <!--<p class="my-0">

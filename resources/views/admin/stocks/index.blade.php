@@ -8,6 +8,7 @@
                 <h3 class="card-title">Productos</h3>
             </div>
             <div class="card-body">
+                <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr style="text-align: center;">
@@ -24,7 +25,7 @@
                                 @csrf @method('PUT')
                                 <td>
                                     <div class="row">
-                                        <div class="col"><input type="number" name="stock" value="{{ $producto->pivot->stock }}" style="text-align: end;" class="form-control"></div>
+                                        <div class="col"><input type="number" name="stock" value="{{ $producto->pivot->stock }}" style="text-align: end;" class="form-control" onkeydown="evitarPunto(event)"></div>
                                         <!--<div class="col">
                                             <select name="disponibilidad" class="form-control">
                                                 <option value="1" {{ $producto->pivot->disponibilidad ? 'selected' : '' }}>Disponible</option>
@@ -39,7 +40,33 @@
                             </form>
                         </tr> @endforeach </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
 </div> @stop
+
+@section('js')
+<script>
+    // Mostrar mensaje de éxito o error usando SweetAlert
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('mensaje'))
+            Swal.fire({
+                text: '{{ session('mensaje') }}',
+                icon: '{{ session('icono') }}',
+                confirmButtonText: 'Aceptar',
+                position: 'center',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        @endif
+    });
+</script>
+
+@stop

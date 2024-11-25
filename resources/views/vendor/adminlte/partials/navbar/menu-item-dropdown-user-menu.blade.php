@@ -14,6 +14,9 @@
 @endif
 @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+<!-- Scripts comunes --> 
+<script src="{{ asset('js/scripts.js') }}"></script>
+
 <!--<li class="nav-item">
     <a class="nav-link d-flex align-items-center" href="{{ route('admin.pedidos.index') }}">
         <span class="me-2">

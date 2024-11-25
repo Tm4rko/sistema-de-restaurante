@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Echo_;
 use Spatie\Permission\Models\Role;
@@ -116,18 +117,19 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        /*Role::destroy($id);
-        return redirect()->route('admin.roles.index')
-            ->with('mensaje', 'Se elimino el rol de manera correcta')
-            ->with('icono', 'success');*/
-
         $role = Role::findOrFail($id);
+
         // Verificar si el rol está asignado a algún usuario
-        if ($role->users()->exists()) {
-            return redirect()->route('admin.roles.index')->with('mensaje', 'No puedes eliminar este rol porque hay usuarios asignados a él.')->with('icono', 'error');
+        if (User::role($role->name)->exists()) {
+            return redirect()->route('admin.roles.index')
+                ->with('mensaje', 'No puedes eliminar este rol porque hay usuarios asignados a él.')
+                ->with('icono', 'error');
         }
+
         // Si no está asignado a ningún usuario, proceder a eliminarlo 
         $role->delete();
-        return redirect()->route('admin.roles.index')->with('mensaje', 'Se eliminó el rol de manera correcta')->with('icono', 'success');
-    }   
+        return redirect()->route('admin.roles.index')
+            ->with('mensaje', 'Se eliminó el rol de manera correcta')
+            ->with('icono', 'success');
+    }
 }

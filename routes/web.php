@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Rutas para las vistas del cliente
-Route::get('/', [App\Http\Controllers\FrontController::class, 'index'])->name('index');
+Route::get('/', [App\Http\Controllers\FrontController::class, 'index'])->name('index')->middleware('check.admin');
 
-Route::get('/listaProductos', [FrontController::class, 'listaProductos'])->name('listaProductos');
+
+Route::get('/listaProductos', [FrontController::class, 'listaProductos'])->name('listaProductos')->middleware('check.admin');
 
 Auth::routes();
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');

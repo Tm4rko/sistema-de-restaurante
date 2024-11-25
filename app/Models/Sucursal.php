@@ -25,4 +25,19 @@ class Sucursal extends Model
             ->withPivot('stock', 'disponibilidad')
             ->withTimestamps();
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($sucursal) {
+            $productos = Producto::all();
+            foreach ($productos as $producto) {
+                $sucursal->productos()->attach($producto->id, [
+                    'stock' => 0,
+                    'disponibilidad' => true,
+                ]);
+            }
+        });
+    }
 }

@@ -81,9 +81,16 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        $categoria = Categoria::find($id);
-        return view('admin.categorias.show', compact('categoria'));
+        try {
+            $categoria = Categoria::findOrFail($id);
+            return view('admin.categorias.show', compact('categoria'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('admin.categorias.index')
+                ->with('mensaje', 'La categoría no fue encontrada o ha sido eliminada')
+                ->with('icono', 'error');
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -93,9 +100,16 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        $categoria = Categoria::find($id);
-        return view('admin.categorias.edit', compact('categoria'));
+        try {
+            $categoria = Categoria::findOrFail($id);
+            return view('admin.categorias.edit', compact('categoria'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('admin.categorias.index')
+                ->with('mensaje', 'La categoría no fue encontrada o ha sido eliminada')
+                ->with('icono', 'error');
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -110,7 +124,7 @@ class CategoriaController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre' => 'required|unique:categorias,nombre,' . $id. '|max:50',
+            'nombre' => 'required|unique:categorias,nombre,' . $id . '|max:50',
             'descripcion' => 'required|max:200',
         ]);
 
@@ -145,6 +159,7 @@ class CategoriaController extends Controller
             // Si ocurre un error al eliminar (por restricciones de clave externa), capturar la excepción
             return redirect()->route('admin.categorias.index')
                 ->with('mensaje', 'No se puede eliminar la categoría porque tiene registros asociados.')
+                ->with('title', '')
                 ->with('icono', 'error');
         }
     }

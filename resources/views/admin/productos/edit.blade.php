@@ -34,7 +34,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="nombre">Nombre del Producto</label>
-                                        <input type="text" class="form-control" value="{{$producto->nombre}}" name="nombre" required>
+                                        <input type="text" class="form-control" value="{{$producto->nombre}}" name="nombre" maxlength="70" onkeypress="soloLetras(event)" required>
                                         @error('nombre')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
@@ -54,7 +54,7 @@
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label for="descripcion">Descripcion</label>
-                                        <textarea name="descripcion" id="" class="form-control" rows="2">{{$producto->descripcion}}</textarea>
+                                        <textarea name="descripcion" id="" class="form-control" maxlength="350" rows="2">{{$producto->descripcion}}</textarea>
                                         @error('descripcion')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror

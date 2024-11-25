@@ -32,7 +32,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name">Nombre del Usuario <span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" value="{{$usuario->name}}" name="name" required>
+                                <input type="text" class="form-control" value="{{$usuario->name}}" onkeydown="return soloLetras(event)" maxlength="70" name="name" required>
                                 @error('name')
                                 <small style="color:red">{{$message}}</small>
                                 @enderror

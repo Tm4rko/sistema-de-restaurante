@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-
 @section('content_header')
 <h1>Listado de Usuarios</h1>
 <hr>
@@ -8,7 +7,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <div class="card card-outline card-primary">
             <div class="card-header">
                 <h3 class="card-title">Usuarios Registrados</h3>
@@ -37,7 +36,7 @@
                             <td>{{$usuario->roles->pluck('name')->implode(', ')}}</td>
                             <td>{{$usuario->name}}</td>
                             <td>{{$usuario->email}}</td>
-                            <td>{{$usuario->email}}</td>
+                            <td>{{$usuario->celular}}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{url('/admin/usuarios',$usuario->id)}}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
@@ -48,23 +47,23 @@
                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0px 4px 4px 0px"><i class="fas fa-trash"></i></button>
                                     </form>
                                     <script>
-                                        function preguntar{{$usuario->id}}(event){
+                                        function preguntar{{$usuario->id}}(event) {
                                             event.preventDefault();
                                             Swal.fire({
-                                                title: 'Deseas eliminar este registro',
+                                                title: '¿Deseas eliminar este registro?',
                                                 text: '',
                                                 icon: 'question',
                                                 showDenyButton: true,
                                                 confirmButtonText: 'Eliminar',
-                                                confirmButtonColor: '#a5161d',
-                                                denyButtonColor: '#270a0a',
+                                                confirmButtonColor: '#ef190f',
+                                                denyButtonColor: '#6c757d',
                                                 denyButtonText: 'Cancelar',
                                             }).then((result) => {
-                                                if(result.isConfirmed){
-                                                    var form = $('#miformulario{{$usuario->id}}');
+                                                if (result.isConfirmed) {
+                                                    var form = document.getElementById('miformulario{{$usuario->id}}');
                                                     form.submit();
                                                 }
-                                            })
+                                            });
                                         }
                                     </script>
                                 </div>
@@ -74,9 +73,7 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
-
     </div>
 </div>
 @stop
@@ -87,9 +84,10 @@
 
 @section('js')
 <script>
+    $(document).ready(function() {
         $('#mitabla').DataTable({
             "pageLength": 5,
-            "language":{
+            "language": {
                 "emptyTable": "No hay información",
                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
                 "infoEmpty": "Mostrando 0 a 0 de 0 Usuarios",
@@ -103,11 +101,29 @@
                 "zeroRecords": "Sin resultados encontrados",
                 "paginate": {
                     "first": "Primero",
-                    "last": "Ultimo",
+                    "last": "Último",
                     "next": "Siguiente",
                     "previous": "Anterior"
                 }
-            },
+            }
         });
-    </script>                                   
+
+        @if (session('mensaje'))
+            Swal.fire({
+                text: '{{ session('mensaje') }}',
+                icon: '{{ session('icono') }}',
+                confirmButtonText: 'Aceptar',
+                position: 'center',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        @endif
+    });
+</script>
 @stop

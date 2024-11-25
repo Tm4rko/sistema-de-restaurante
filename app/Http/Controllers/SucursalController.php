@@ -45,10 +45,10 @@ class SucursalController extends Controller
         $request->validate([
             'nombre_sucursal' => 'required',
             'nit' => 'required|digits:9',
-            'telefono' => 'required|digits:8',
+            'telefono' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
             'correo' => 'required|unique:sucursals',
             'direccion' => 'required',
-            'logo' => 'required|image|mimes:jpg,jpeg,png',
+            //'logo' => 'required|image|mimes:jpg,jpeg,png',
         ]);
 
         $sucursal = new Sucursal();
@@ -58,7 +58,7 @@ class SucursalController extends Controller
         $sucursal->telefono = $request->telefono;
         $sucursal->correo = $request->correo;
         $sucursal->direccion = $request->direccion;
-        $sucursal->logo = $request->file('logo')->store('logos', 'public');
+        $sucursal->logo = '/images/logo.png';
         $sucursal->save();
 
         $usuario = new User();
@@ -115,7 +115,7 @@ class SucursalController extends Controller
         $request->validate([
             'nombre_sucursal' => 'required',
             'nit' => 'required|digits:9',
-            'telefono' => 'required|digits:8',
+            'telefono' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
             'correo' => 'required|email|unique:sucursals,correo,' . $id,
             'direccion' => 'required',
         ]);

@@ -1,25 +1,15 @@
-@extends('adminlte::master')
+@extends('adminlte::page')
 
-@php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home') )
-
-@if (config('adminlte.use_route_url', false))
-@php( $dashboard_url = $dashboard_url ? route($dashboard_url) : '' )
-@else
-@php( $dashboard_url = $dashboard_url ? url($dashboard_url) : '' )
-@endif
-
-@section('adminlte_css')
-@stack('css')
-@yield('css')
+@section('content_header')
+<h1>Sucursal/Crear sucursal</h1>
+<hr>
 @stop
 
-@section('classes_body'){{ ($auth_type ?? 'login') . '-page' }}@stop
-
-@section('body')
+@section('content')
 <div class="container">
-    <center>
+    <!--<center>
         <img src="{{ asset('/images/logo.png')}}" width="250px" alt="">
-    </center>
+    </center>-->
 
     <div class="row">
         <div class="col-md-12">
@@ -37,7 +27,7 @@
                     <form action="{{url('crear-sucursal/create')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-3">
+                            <!--<div class="col-md-3">
                                 <div class="form-group">
                                     <label for="logo">Logo <span style="color: red;">*</span> </label>
                                     <input type="file" name="logo" id="file" accept=".jpg, .jpeg, .png" class="form-control" required>
@@ -68,13 +58,13 @@
                                         document.getElementById('file').addEventListener('change', archivo, false);
                                     </script>
                                 </div>
-                            </div>
-                            <div class="col-md-9">
+                            </div>-->
+                            <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="nombre_sucursal">Nombre de la Sucursal <span style="color: red;">*</span></label>
-                                            <input name="nombre_sucursal" type="text" value="{{old('nombre_sucursal')}}" class="form-control" required>
+                                            <input name="nombre_sucursal" type="text" value="{{old('nombre_sucursal')}}" maxlength="50" onkeypress="soloLetras(event)" class="form-control" required>
                                             @error('nombre_sucursal')
                                             <small style="color:red">{{$message}}</small>
                                             @enderror
@@ -83,7 +73,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nit">NIT <span style="color: red;">*</span></label>
-                                            <input name="nit" value="{{old('nit')}}" type="number" min="1" class="form-control" required>
+                                            <input name="nit" value="{{old('nit')}}" type="number" min="1" class="form-control" onkeydown="evitarPunto(event)" required>
                                             @error('nit')
                                             <small style="color:red">{{$message}}</small>
                                             @enderror
@@ -94,7 +84,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="telefono">Teléfono de la Sucursal <span style="color: red;">*</span></label>
-                                            <input name="telefono" value="{{old('telefono')}}" type="number" min="1" class="form-control" required>
+                                            <input name="telefono" value="{{old('telefono')}}" type="number" min="1" class="form-control" onkeydown="evitarPunto(event)" required>
                                             @error('telefono')
                                             <small style="color:red">{{$message}}</small>
                                             @enderror
@@ -114,7 +104,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="direccion">Dirección <span style="color: red;">*</span></label>
-                                            <input id="pac-input" value="{{old('direccion')}}" class="form-control" name="direccion" type="text" required>
+                                            <input id="pac-input" value="{{old('direccion')}}" class="form-control" name="direccion" type="text" maxlength="350" required>
                                             @error('direccion')
                                             <small style="color:red">{{$message}}</small>
                                             @enderror

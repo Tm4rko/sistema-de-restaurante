@@ -21,7 +21,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="nombre">Nombre de la Categoria</label>
-                                <input type="text" class="form-control" value="{{old('nombre')}}" name="nombre" required>
+                                <input type="text" class="form-control" value="{{old('nombre')}}" name="nombre" maxlength="70" onkeypress="soloLetras(event)" required>
                                 @error('nombre')
                                 <small style="color:red">{{$message}}</small>
                                 @enderror
@@ -30,7 +30,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="descripcion">Descripcion</label>
-                                <input type="text" class="form-control" value="{{old('descripcion')}}" name="descripcion" required>
+                                <input type="text" class="form-control" value="{{old('descripcion')}}" name="descripcion" maxlength="350" required>
                                 @error('descripcion')
                                 <small style="color:red">{{$message}}</small>
                                 @enderror

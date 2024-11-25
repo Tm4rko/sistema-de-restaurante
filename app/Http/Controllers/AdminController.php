@@ -17,7 +17,9 @@ class AdminController extends Controller
     public function index(){
         $total_categorias = Categoria::count();
         $total_roles = Role::count();
-        $total_usuarios = User::count();
+
+        $sucursal = Auth::user()->sucursal; // Obtener la sucursal del usuario autenticado
+        $total_usuarios = User::where('sucursal_id', $sucursal->id)->count();
         $total_productos = Producto::count();
 
         $sucursal_id = Auth::check() ? Auth::user()->sucursal_id : redirect()->route('login')->send();

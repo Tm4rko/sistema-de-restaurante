@@ -115,4 +115,5 @@
         {{ __('adminlte::adminlte.i_already_have_a_membership') }}
     </a>
 </p>
+<p class="my-0"> <a href="{{ route('index') }}"> {{ __('Volver a la página principal') }} </a> </p>
 @stop

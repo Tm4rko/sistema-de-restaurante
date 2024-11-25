@@ -34,7 +34,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="nombre">Nombre del Producto <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="{{old('nombre')}}" name="nombre" required>
+                                        <input type="text" class="form-control" value="{{old('nombre')}}" name="nombre" onkeypress="soloLetras(event)" maxlength="70" required>
                                         @error('nombre')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
@@ -43,7 +43,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="precio_venta">Precio de Venta <span style="color: red;">*</span></label>
-                                        <input type="number" class="form-control" value="{{old('precio_venta')}}" min="1" step="0.01" name="precio_venta" required>
+                                        <input type="number" class="form-control" value="{{old('precio_venta')}}" min="1" step="0.01" name="precio_venta" onkeydown="evitarLetraE(event)" required>
                                         @error('precio_venta')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
@@ -54,7 +54,7 @@
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label for="descripcion">Descripcion</label>
-                                        <textarea name="descripcion" id="" class="form-control" rows="2"></textarea>
+                                        <textarea name="descripcion" id="" class="form-control" rows="2" maxlength="350"></textarea>
                                         @error('descripcion')
                                         <small style="color:red">{{$message}}</small>
                                         @enderror
@@ -104,7 +104,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <a href="{{url('/admin/categorias')}}" class="btn btn-secondary">Cancelar</a>
+                                <a href="{{url('/admin/productos')}}" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
                             </div>
                         </div>

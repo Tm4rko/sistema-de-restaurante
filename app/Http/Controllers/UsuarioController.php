@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
@@ -45,9 +47,9 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'name' => 'required',
+            'name' => ['required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
             'email' => 'required|unique:users',
-            'celular' => ['required', 'digits:8'],
+            'celular' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
             'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'],
         ]);
 
@@ -76,9 +78,16 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $usuario = User::find($id);
-        return view('admin.usuarios.show', compact('usuario'));
+        try {
+            $usuario = User::findOrFail($id);
+            return view('admin.usuarios.show', compact('usuario'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'El usuario no fue encontrado o ha sido eliminado')
+                ->with('icono', 'error');
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -88,10 +97,17 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::find($id);
-        $roles = Role::all();
-        return view('admin.usuarios.edit', compact('usuario', 'roles'));
+        try {
+            $usuario = User::findOrFail($id);
+            $roles = Role::all();
+            return view('admin.usuarios.edit', compact('usuario', 'roles'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'El usuario no fue encontrado o ha sido eliminado')
+                ->with('icono', 'error');
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -106,9 +122,9 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'name' => 'required',
+            'name' => ['required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
             'email' => 'required|unique:users,email,' . $id,
-            'celular' => ['required', 'digits:8'],
+            'celular' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
             'password' => ['string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'],
         ]);
 
@@ -137,7 +153,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /*public function destroy($id)
     {
         $user = User::find($id);
 
@@ -147,9 +163,56 @@ class UsuarioController extends Controller
                 ->with('icono', 'error');
         }
 
-        User::destroy($id);
-        return redirect()->route('admin.usuarios.index')
-            ->with('mensaje', 'Se elimino el usuario de manera correcta')
-            ->with('icono', 'success');
+        try {
+            // Eliminar roles asociados del usuario
+            $user->syncRoles([]);
+
+            // Intentar eliminar el usuario
+            $user->delete();
+
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'Se eliminó el usuario de manera correcta')
+                ->with('icono', 'success');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'No se puede eliminar el usuario porque tiene registros asociados.')
+                ->with('title', '')
+                ->with('icono', 'error');
+        }
+    }*/
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        Log::info('Intentando eliminar usuario', ['user_id' => $user->id]);
+
+        if (Auth::user()->id == $user->id) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'No puedes eliminar tu propia cuenta.')
+                ->with('icono', 'error');
+        }
+
+        DB::beginTransaction();
+        try {
+            Log::info('Eliminando roles del usuario', ['user_id' => $user->id]);
+            $user->syncRoles([]);
+
+            Log::info('Roles eliminados, intentando eliminar usuario', ['user_id' => $user->id]);
+            $user->delete();
+
+            DB::commit();
+            Log::info('Usuario eliminado con éxito', ['user_id' => $user->id]);
+
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'Se eliminó el usuario de manera correcta')
+                ->with('icono', 'success');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error al eliminar el usuario', ['error' => $e->getMessage()]);
+
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'No se puede eliminar el usuario porque tiene registros asociados.')
+                ->with('title', '')
+                ->with('icono', 'error');
+        }
     }
 }

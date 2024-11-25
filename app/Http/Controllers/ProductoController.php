@@ -16,7 +16,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::with('categoria')->get();
+        $productos = Producto::with('categoria')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('admin.productos.index', compact('productos'));
     }
 
@@ -43,8 +45,8 @@ class ProductoController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre'=>'required',
-            'precio_venta'=>'required|numeric|min:1',
+            'nombre' => 'required',
+            'precio_venta' => 'required|numeric|min:1',
 
         ]);
 
@@ -56,17 +58,15 @@ class ProductoController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->categoria_id = $request->categoria_id;
 
-        if($request->hasFile('imagen')){
+        if ($request->hasFile('imagen')) {
             $producto->imagen = $request->file('imagen')->store('productos', 'public');
         }
 
         $producto->save();
-        
+
         return redirect()->route('admin.productos.index')
             ->with('mensaje', 'Se registro el producto de manera correcta')
-            ->with('icono','success');
-
-
+            ->with('icono', 'success');
     }
 
     /**
@@ -77,9 +77,16 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto = Producto::find($id);
-        return view('admin.productos.show', compact('producto'));
+        try {
+            $producto = Producto::findOrFail($id);
+            return view('admin.productos.show', compact('producto'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('admin.productos.index')
+                ->with('mensaje', 'El producto no fue encontrado o ha sido eliminado')
+                ->with('icono', 'error');
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -89,10 +96,17 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        $producto = Producto::find($id);
-        $categorias = Categoria::all();
-        return view('admin.productos.edit', compact('producto', 'categorias'));
+        try {
+            $producto = Producto::findOrFail($id);
+            $categorias = Categoria::all();
+            return view('admin.productos.edit', compact('producto', 'categorias'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('admin.productos.index')
+                ->with('mensaje', 'El producto no fue encontrado o ha sido eliminado')
+                ->with('icono', 'error');
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -107,8 +121,8 @@ class ProductoController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'nombre'=>'required',
-            'precio_venta'=>'required|numeric|min:1',
+            'nombre' => 'required',
+            'precio_venta' => 'required|numeric|min:1',
         ]);
 
         $producto = Producto::find($id);
@@ -119,16 +133,16 @@ class ProductoController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->categoria_id = $request->categoria_id;
 
-        if($request->hasFile('imagen')){
-            Storage::delete('public/'.$producto->imagen);
+        if ($request->hasFile('imagen')) {
+            Storage::delete('public/' . $producto->imagen);
             $producto->imagen = $request->file('imagen')->store('productos', 'public');
         }
 
         $producto->save();
-        
+
         return redirect()->route('admin.productos.index')
             ->with('mensaje', 'Se actualizo el producto de manera correcta')
-            ->with('icono','success');
+            ->with('icono', 'success');
     }
 
     /**
@@ -139,12 +153,28 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        $producto = Producto::find($id);
-        Producto::destroy($id);
-        Storage::delete('public/'.$producto->imagen);
+        try {
+            // Encontrar el producto
+            $producto = Producto::findOrFail($id);
 
-        return redirect()->route('admin.productos.index')
-            ->with('mensaje', 'Se elimino el producto de manera correcta')
-            ->with('icono', 'success');
+            // Eliminar el producto
+            Producto::destroy($id);
+
+            // Eliminar la imagen asociada del almacenamiento
+            Storage::delete('public/' . $producto->imagen);
+
+            // Redirigir con un mensaje de éxito
+            return redirect()->route('admin.productos.index')
+                ->with('mensaje', 'Se eliminó el producto de manera correcta')
+                ->with('icono', 'success');
+        } catch (\Exception $e) {
+            // Capturar y manejar cualquier excepción
+            \Log::error('Error al eliminar el producto: ' . $e->getMessage());
+
+            // Redirigir con un mensaje de error
+            return redirect()->route('admin.productos.index')
+                ->with('mensaje', 'No se puede eliminar el producto porque tiene registros asociados.')
+                ->with('icono', 'error');
+        }
     }
 }

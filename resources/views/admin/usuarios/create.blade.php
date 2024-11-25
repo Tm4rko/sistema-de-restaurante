@@ -31,7 +31,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name">Nombre del Usuario <span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" value="{{old('name')}}" name="name" required>
+                                <input type="text" class="form-control" value="{{old('name')}}" name="name" maxlength="70" onkeydown="return soloLetras(event)" required>
                                 @error('name')
                                 <small style="color:red">{{$message}}</small>
                                 @enderror
@@ -51,7 +51,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="celular">Celular <span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" value="{{old('celular')}}" name="celular" required>
+                                <input type="text" class="form-control" value="{{old('celular')}}" onkeydown="evitarPunto(event)" name="celular" required>
                                 @error('celular')
                                 <small style="color:red">{{$message}}</small>
                                 @enderror
