@@ -143,7 +143,7 @@
       <div class="overlay">
         <h2>Galeria</h2>
         <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit duis sed.</p>
+        <h4>Disfruta del Sabor Único de Nuestras Parrillas.</h4>
       </div>
     </div>
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">

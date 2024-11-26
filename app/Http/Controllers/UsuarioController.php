@@ -50,6 +50,7 @@ class UsuarioController extends Controller
             'name' => ['required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
             'email' => 'required|unique:users',
             'celular' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
+            'direccion' => ['required', 'max:350'],
             'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'],
         ]);
 
@@ -58,6 +59,7 @@ class UsuarioController extends Controller
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->celular = $request->celular;
+        $usuario->direccion = $request->direccion;
         $usuario->password = Hash::make($request->password);
         $usuario->sucursal_id = Auth::user()->sucursal_id;
 
@@ -125,6 +127,7 @@ class UsuarioController extends Controller
             'name' => ['required', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
             'email' => 'required|unique:users,email,' . $id,
             'celular' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
+            'direccion' => ['required', 'max:350'],
             'password' => ['string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/', 'confirmed'],
         ]);
 
@@ -133,6 +136,7 @@ class UsuarioController extends Controller
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->celular = $request->celular;
+        $usuario->direccion = $request->direccion;
         if ($request->filled('password')) {
             $usuario->password = Hash::make($request->password);
         }

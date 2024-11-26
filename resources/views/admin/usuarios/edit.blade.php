@@ -58,19 +58,30 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="direccion">Direccion <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" value="{{$usuario->direccion}}" onkeydown="" name="direccion" required>
+                                @error('direccion')
+                                <small style="color:red">{{$message}}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password">Password <span style="color: red;">*</span></label>
-                                <input type="password" class="form-control" value="{{old('password')}}" name="password">
+                                <input type="password" class="form-control" onkeypress="bloquearEspacios(event)" value="{{old('password')}}" name="password">
                                 @error('password')
                                 <small style="color:red">{{$message}}</small>
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password_confirmation">Confirmar Password <span style="color: red;">*</span></label>
-                                <input type="password" class="form-control" value="{{old('password_confirmation')}}" name="password_confirmation">
+                                <input type="password" class="form-control" onkeypress="bloquearEspacios(event)" value="{{old('password_confirmation')}}" name="password_confirmation">
                             </div>
                         </div>
                     </div>

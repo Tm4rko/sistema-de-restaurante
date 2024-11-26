@@ -59,6 +59,17 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label for="direccion">Direccion <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" value="{{old('direccion')}}" onkeydown="" name="direccion" required>
+                                @error('direccion')
+                                <small style="color:red">{{$message}}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="password">Password <span style="color: red;">*</span></label>
                                 <input type="password" class="form-control" value="{{old('password')}}" name="password" required>
                                 @error('password')
@@ -66,7 +77,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password_confirmation">Confirmar Password <span style="color: red;">*</span></label>
                                 <input type="password" class="form-control" value="{{old('password_confirmation')}}" name="password_confirmation" required>

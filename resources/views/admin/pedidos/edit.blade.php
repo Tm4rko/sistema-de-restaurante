@@ -42,7 +42,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -50,13 +50,13 @@
                                     <p>{{ $pedido->user->name }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="celular">Celular</label>
                                     <p>{{ $pedido->user->celular }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="email">Correo Electrónico</label>
                                     <p>{{ $pedido->user->email }}</p>
@@ -70,10 +70,16 @@
                                     <p>{{ $pedido->fechaPedido }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="descripcion">Comentarios</label>
                                     <p>{{ $pedido->comentario }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="direccion">Dirección</label>
+                                    <p>{{ $pedido->user->direccion }}</p>
                                 </div>
                             </div>
                         </div>

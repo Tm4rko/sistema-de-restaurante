@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="role">Nombre del Rol</label>
+                            <label for="role">Rol del Usuario</label>
                             <p>{{$usuario->roles->pluck('name')->implode(', ')}}</p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-md-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="email">Celular</label>
                             <p>{{$usuario->email}}</p>
@@ -46,6 +46,12 @@
                         <div class="form-group">
                             <label for="password">Fecha y Hora de Registro</label>
                             <p>{{$usuario->created_at}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <p>{{$usuario->direccion}}</p>
                         </div>
                     </div>
                 </div>

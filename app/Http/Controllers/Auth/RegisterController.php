@@ -52,7 +52,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'celular' => ['required', 'digits:8'],
+            'celular' => ['required', 'digits:8', 'regex:/^[67][0-9]{7}$/'],
+            'direccion' => ['required', 'max:350'],
             'password'=>['string', 'min:8', 'regex:/[a-z]/', 'regex:/[0-9]/','confirmed'],
         ]);
     }
@@ -70,6 +71,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'celular' => $data['celular'],
+            'direccion' => $data['direccion'],
             'sucursal_id' => 4,
         ]);
         $user->assignRole("Cliente");

@@ -12,6 +12,8 @@
 @endif
 
 @section('auth_header', __('adminlte::adminlte.register_message'))
+<!-- Scripts comunes --> 
+<script src="{{ asset('js/scripts.js') }}"></script>
 
 @section('auth_body')
 <form action="{{ $register_url }}" method="post">
@@ -20,7 +22,7 @@
     {{-- Name field --}}
     <div class="input-group mb-3">
         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-            value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+            value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" onkeypress="soloLetras(event)" autofocus>
 
         <div class="input-group-append">
             <div class="input-group-text">
@@ -37,7 +39,7 @@
 
     {{-- Email field --}}
     <div class="input-group mb-3">
-        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+        <input type="email" name="email" onkeypress="validarEmail(event)" class="form-control @error('email') is-invalid @enderror"
             value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
 
         <div class="input-group-append">
@@ -54,18 +56,29 @@
     </div>
 
     {{-- Celular field --}}
-    <div class="input-group mb-3"> 
-        <input type="tel" name="celular" class="form-control @error('celular') is-invalid @enderror" 
-        value="{{ old('celular') }}" placeholder="Celular" required 
-        inputmode="numeric" pattern="[0-9]{8}">
+    <div class="input-group mb-3">
+        <input type="tel" name="celular" class="form-control @error('celular') is-invalid @enderror"
+            value="{{ old('celular') }}" onkeypress="return soloNumeros(event)" placeholder="Celular" required
+            inputmode="numeric" pattern="[0-9]{8}">
         <div class="input-group-append">
             <div class="input-group-text"> <span class="fas fa-phone {{ config('adminlte.classes_auth_icon', '') }}"></span> </div>
         </div> @error('celular') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
     </div>
 
+    {{-- Dirección field --}}
+    <div class="input-group mb-3"> <input type="text" name="direccion"
+            class="form-control @error('direccion') is-invalid @enderror" value="{{ old('direccion') }}"
+            placeholder="Dirección" required>
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-map-marker-alt {{ config('adminlte.classes_auth_icon', '') }}"></span>
+            </div>
+        </div> @error('direccion') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+    </div>
+
     {{-- Password field --}}
     <div class="input-group mb-3">
-        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+        <input type="password" name="password" onkeypress="bloquearEspacios(event)" class="form-control @error('password') is-invalid @enderror"
             placeholder="{{ __('adminlte::adminlte.password') }}">
 
         <div class="input-group-append">
@@ -83,7 +96,7 @@
 
     {{-- Confirm password field --}}
     <div class="input-group mb-3">
-        <input type="password" name="password_confirmation"
+        <input type="password" name="password_confirmation" onkeypress="bloquearEspacios(event)"
             class="form-control @error('password_confirmation') is-invalid @enderror"
             placeholder="{{ __('adminlte::adminlte.retype_password') }}">
 
