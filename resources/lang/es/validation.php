@@ -95,7 +95,7 @@ return [
     'numeric'              => 'El campo :attribute debe ser un número.',
     'password'             => 'La contraseña es incorrecta.',
     'present'              => 'El campo :attribute debe estar presente.',
-    'regex'                => 'El formato del campo :attribute es inválido.',
+    'regex'                => 'El formato del campo :attribute es inválido  qwe.',
     'required'             => 'El campo :attribute es obligatorio.',
     'required_if'          => 'El campo :attribute es obligatorio cuando el campo :other es :value.',
     'required_unless'      => 'El campo :attribute es requerido a menos que :other se encuentre en :values.',
@@ -133,6 +133,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'celular' => [
+            'regex' => 'El campo :attribute debe comenzar con 6 o 7 y debe tener 8 dígitos',
+        ],
     ],
 
     /*
@@ -146,6 +149,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'correo',
+        'password' => 'contraseña',
+    ],
 
 ];

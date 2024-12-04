@@ -57,10 +57,11 @@
                 <div class="row">
                     @foreach ($categorias as $categoria)
                     <div class="col-sm-12">
-                        <h2 class="text-center mt-5">{{$categoria->nombre}}</h2>
+                        <h2 id="titleCategoria{{ $categoria->id }}" class="text-center mt-5">{{$categoria->nombre}}</h2>
                         <div class="row justify-content-center">
                             @forelse ($categoria->productos as $producto)
-                            @php $stock = $stocks[$producto->id] ?? null; $disponibilidad = $stock !== null ? \DB::table('stock_sucursales') ->where('sucursal_id', $sucursalSeleccionada->id) ->where('producto_id', $producto->id) ->value('disponibilidad') : null; @endphp @if($stock === 0 || $disponibilidad === 0) <div class="col-sm-6 mt-3 mb-3">
+                            @php $stock = $stocks[$producto->id] ?? null; $disponibilidad = $stock !== null ? \DB::table('stock_sucursales') ->where('sucursal_id', $sucursalSeleccionada->id) ->where('producto_id', $producto->id) ->value('disponibilidad') : null; @endphp @if($stock === 0 || $disponibilidad === 0) 
+                            <div id="divProducto{{ $producto->id }}" class="col-sm-6 mt-3 mb-3">
                                 <div class="clickable-element" style="background-color: #f8d7da; padding: 10px; border: 1px solid #f5c6cb;">
                                     <div class="row">
                                         <div class="col-md-4"> <img src="{{ asset('storage/' . $producto->imagen) }}" class="img-fluid" alt="{{ $producto->nombre }}"> </div>
@@ -70,7 +71,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> @else <div class="col-sm-6 mt-3 mb-3">
+                            </div> 
+                            @else 
+                            <div class="col-sm-6 mt-3 mb-3">
                                 <div class="clickable-element" data-bs-toggle="modal" data-bs-target="#productoModal-{{ $producto->id }}">
                                     <div class="row">
                                         <div class="col-md-4"> <img src="{{ asset('storage/' . $producto->imagen) }}" class="img-fluid" alt="{{ $producto->nombre }}"> </div>
@@ -296,7 +299,7 @@
                 <tbody>
                     @foreach (Cart::content() as $item)
                     <tr>
-                        <td>{{$item->name}}</td>
+                        <td id="{{$item->id}}">{{$item->name}}</td>
                         <td>{{$item->options->especificacion}}</td>
                         <td>{{$item->qty}} x {{$item->price}}</td>
                         <td>{{number_format($item->qty * $item->price,2)}}</td>
@@ -304,7 +307,7 @@
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <p class="text-end m-0 p-0">Total Bs. {{Cart::total()}}</p>
                         </td>
                     </tr>
@@ -422,24 +425,7 @@
         document.getElementById(`qty-${productId}`).value = qty;
     }
 
-    //Mandar cantidad de platillos al controlador
 
-    /*function setFormValues(productId) {
-        let qty = document.getElementById(`count-${productId}`).textContent;
-        let medio = document.getElementById(`count-medio-${productId}`).textContent;
-        let trescuartos = document.getElementById(`count-trescuartos-${productId}`).textContent;
-        let biencocido = document.getElementById(`count-biencocido-${productId}`).textContent;
-        let guarniciones = @json($guarniciones);
-        let guarnicionesText = '';
-        guarniciones.forEach(guarnicion => {
-            let count = document.getElementById(`count-guarnicion-${productId}-${guarnicion.id}`).textContent;
-            guarnicionesText += `${guarnicion.nombre}: ${count}, `;
-        });
-        let specification = `Término de carne: Medio: ${medio}, Tres Cuartos: ${trescuartos}, Bien Cocido: ${biencocido}, Guarniciones: ${guarnicionesText}`;
-        document.getElementById(`qty-${productId}`).value = qty;
-        document.getElementById(`specification-${productId}`).value = specification;
-    }*/
-   //Mandar cantidad de platillos al controlador
 function setFormValues(productId) {
     let qty = parseInt(document.getElementById(`count-${productId}`).textContent);
     let medio = parseInt(document.getElementById(`count-medio-${productId}`).textContent);

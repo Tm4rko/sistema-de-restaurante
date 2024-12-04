@@ -17,15 +17,6 @@
 <!-- Scripts comunes --> 
 <script src="{{ asset('js/scripts.js') }}"></script>
 
-<!--<li class="nav-item">
-    <a class="nav-link d-flex align-items-center" href="{{ route('admin.pedidos.index') }}">
-        <span class="me-2">
-            <i class="fas fa-shopping-cart"></i> Pedidos Nuevos
-        </span>
-        <span id="pedidosNuevosCount" class="badge bg-danger">{{ $pedidosNuevosCount }}</span>
-    </a>
-</li>-->
-
 <li class="nav-item">
     <a class="nav-link position-relative" href="{{ route('admin.pedidos.index') }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">

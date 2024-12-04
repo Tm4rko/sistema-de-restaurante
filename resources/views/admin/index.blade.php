@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'El Buen Sabor')
 
 @section('content_header')
 <h1>Bienvenido a la Sucursal {{$sucursal->nombre_sucursal}}</h1>

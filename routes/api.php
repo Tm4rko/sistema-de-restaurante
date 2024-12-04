@@ -12,6 +12,8 @@ Route::group(['middleware'=>["auth:sanctum"]],function(){
     Route::get('logout', [UserController::class,'logout']);
     Route::post('categorias', [JsonController::class,'categorias']);
     Route::post('productos', [JsonController::class,'productos']);
+    // Añadir la ruta para obtener los pedidos del usuario 
+    Route::post('pedidos', [JsonController::class,'pedidos']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

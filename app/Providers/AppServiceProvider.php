@@ -27,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('adminlte::partials.navbar.menu-item-dropdown-user-menu', function ($view) {
-            $pedidosNuevosCount = Pedido::where('estado', 'Nuevo')->count();
+            $admin = auth()->user();
+            $sucursalId = $admin->sucursal_id;
+            $pedidosNuevosCount = Pedido::where('estado', 'Nuevo')->where('sucursal_id', $sucursalId)->count();
             $view->with('pedidosNuevosCount', $pedidosNuevosCount);
         });
     }

@@ -1,5 +1,7 @@
 @extends('layouts.appClient')
 
+@section('title', 'El Buen Sabor')
+
 <style>
   .carousel-item {
     display: flex;
@@ -8,25 +10,20 @@
 
   .carousel-item img {
     width: 24%;
-    /* Ajusta el ancho para mostrar 4 imágenes en el contenedor */
   }
 
   #footer {
     background-color: #333;
-    /* Color de fondo */
     color: #fff;
-    /* Color de letra */
     padding: 20px 0;
   }
 
   #footer h3 {
     color: #ffcc00;
-    /* Color de letra de los títulos */
   }
 
   #footer .contact-item p {
     color: #ccc;
-    /* Color de letra de los párrafos */
   }
 </style>
 
@@ -46,7 +43,7 @@
       </div>
       <div class="col-12 col-md-6">
         <div class="about-text">
-          <h2>Nuestro Restaurante</h2>
+          <h2 id="titleHistory">Nuestro Restaurante</h2>
           <hr>
           <p>"El Buen Sabor" una churrasquería emblemática en Ciudad de La Paz, que gracias a nuestro compromiso inquebrantable, nos consolidamos con la apertura de nuevas sucursales ubicadas en las ciudades de La Paz y El Alto.</p>
           <h3>A tu servicio</h3>

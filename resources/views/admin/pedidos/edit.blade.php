@@ -72,12 +72,6 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="descripcion">Comentarios</label>
-                                    <p>{{ $pedido->comentario }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label for="direccion">Dirección</label>
                                     <p>{{ $pedido->user->direccion }}</p>
                                 </div>

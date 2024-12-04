@@ -32,16 +32,16 @@
                     @foreach (Cart::content() as $item)
                     <tr>
                         <td><img src="{{asset('storage/'.$item->options->imagen)}}" width="100"></td>
-                        <td>{{$item->name}}</td>
+                        <td id="idTitleItem{{$item->id}}">{{$item->name}}</td>
                         <td class="text-wrap" style="max-width: 200px;">{{$item->options->especificacion}}</td>
                         <td>{{$item->qty}}</td>
                         <td>{{$item->price}}</td>
                         <td>{{number_format($item->qty * $item->price,2)}}</td>
-                        <td><a href="eliminaritem/{{$item->rowId}}" class="btn btn-sm text-danger">x</a></td>
+                        <td><a href="eliminaritem/{{$item->rowId}}" class="btn btn-sm text-danger" id="eliminarItem{{$item->id}}">x</a></td>
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <p class="text-end m-0 p-0">Total Bs. {{Cart::total()}}</p>
                         </td>
                     </tr>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-sm-4">
                     @auth
-                    <a href="confirmarcarrito" class="btn btn-danger">Ordenar ahora</a>
+                    <a href="confirmarcarrito" class="btn btn-success">Ordenar ahora</a>
                     @else
                     <a href="/login" class="btn btn-danger">Entra para ordenar</a>
                     @endauth

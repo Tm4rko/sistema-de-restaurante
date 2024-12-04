@@ -45,10 +45,10 @@
           </ul>
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{route('index')}}">Inicio</a>
+              <a class="nav-link" id="id-inicio" href="{{route('index')}}">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('listaProductos')}}">Realiza tu PEDIDO</a>
+              <a class="nav-link" id="id-pedido" href="{{route('listaProductos')}}">Realiza tu PEDIDO</a>
             </li>
           </ul>
 
@@ -71,12 +71,12 @@
             @guest
             @if (Route::has('login'))
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">{{ __('Entrar') }}</a>
+              <a class="nav-link" id="id-entrar" href="{{ route('login') }}">{{ __('Entrar') }}</a>
             </li>
             @endif
             @if (Route::has('register'))
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
+              <a class="nav-link" id="id-registrate" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
             </li>
             @endif
             @else
@@ -109,22 +109,6 @@
   <div class="container mt-5">
     <p class="text-center">&copy; Todos los derechos reservados | El Buen Sabor | 2024</p>
   </div>
-
-
-  <!-- Modal para Selección de Sucursal -->
-  <!--<div class="modal fade" id="sucursalModal" tabindex="-1" aria-labelledby="sucursalModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form id="sucursalForm" action="{{ route('cliente.sucursal.select') }}" method="POST"> @csrf <input type="hidden" name="redirect_to" value="{{ url()->current() }}">
-          <div class="modal-header">
-            <h5 class="modal-title" id="sucursalModalLabel">Seleccione la Sucursal</h5>
-          </div>
-          <div class="modal-body"> @foreach($sucursales as $sucursal) <div class="form-check"> <input class="form-check-input" type="radio" name="sucursal_id" id="sucursal{{ $sucursal->id }}" value="{{ $sucursal->id }}" required> <label class="form-check-label" for="sucursal{{ $sucursal->id }}">{{ $sucursal->nombre_sucursal }}</label> </div> @endforeach </div>
-          <div class="modal-footer"> <button type="submit" class="btn btn-primary">Seleccionar</button> </div>
-        </form>
-      </div>
-    </div>
-  </div>-->
   <!-- Modal para Selección de Sucursal -->
   <div class="modal fade" id="sucursalModal" tabindex="-1" aria-labelledby="sucursalModalLabel" aria-hidden="true">
     <div class="modal-dialog">

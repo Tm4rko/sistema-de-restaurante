@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Sistema de Ventas',
+    'title' => 'El Buen Sabor',
     'title_prefix' => '',
     'title_postfix' => '',
 
